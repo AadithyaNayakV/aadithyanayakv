@@ -64,10 +64,10 @@ export default function SpotlightCard({
       onClick={onClick}
       whileHover={{ y: -5 }}
       whileTap={{ scale: 0.98 }}
-      className={`group relative overflow-hidden rounded-2xl border border-edge bg-surface/90 backdrop-blur-xl transition-all duration-200 ${
+      className={`group relative overflow-hidden rounded-2xl border border-edge/80 bg-surface/60 backdrop-blur-md transition-all duration-200 ${
         isHovered
-          ? 'border-accent/40 shadow-[0_16px_36px_-10px_rgba(0,0,0,0.6),0_0_20px_-6px_rgba(139,92,246,0.3)]'
-          : ''
+          ? 'border-accent/40 shadow-[0_16px_36px_-10px_rgba(0,0,0,0.5),0_0_20px_-6px_rgba(139,92,246,0.25)]'
+          : 'shadow-xs'
       } ${className}`}
       {...props}
     >

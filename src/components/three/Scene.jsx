@@ -35,7 +35,7 @@ export default function Scene() {
   return (
     <div
       ref={wrapper}
-      className="fixed inset-0 z-0 pointer-events-none [&_canvas]:pointer-events-auto"
+      className="hidden lg:block fixed inset-0 z-0 pointer-events-none [&_canvas]:pointer-events-auto"
       aria-hidden="true"
     >
       <Canvas

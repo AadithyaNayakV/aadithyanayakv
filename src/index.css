@@ -193,16 +193,18 @@ html.light,
     transform: scaleX(1);
   }
 
-  /* Surfaces with refined border and subtle backdrop blur */
+  /* Surfaces with refined border and subtle backdrop blur ("lil glass type") */
   .panel {
-    background: color-mix(in srgb, var(--color-surface) 85%, transparent);
-    backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--color-surface) 60%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border: 1px solid var(--color-edge);
   }
 
   .panel-interactive {
-    background: color-mix(in srgb, var(--color-surface) 80%, transparent);
-    backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--color-surface) 60%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border: 1px solid var(--color-edge);
     transition: border-color 250ms ease, box-shadow 250ms ease, transform 250ms ease;
   }

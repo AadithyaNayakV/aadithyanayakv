@@ -178,40 +178,35 @@ export default function PhotoSphere({ imageSrc = '/profile.png' }) {
     const { viewport } = state
     const reduced = motionState.reducedMotion
 
-    // Inertial spin deceleration with minimum idle drift
+    // Continuous active auto-rotation + inertia drag
     if (!isDragging.current) {
-      mesh.rotation.y += velocity.current.y
-      mesh.rotation.x += velocity.current.x
+      mesh.rotation.y += dt * 0.38 + velocity.current.y
+      mesh.rotation.x += dt * 0.10 + velocity.current.x
 
-      velocity.current.y *= 0.96
-      velocity.current.x *= 0.96
-
-      // Keep subtle persistent idle spin
-      if (Math.abs(velocity.current.y) < 0.004) {
-        velocity.current.y = 0.004
-      }
+      velocity.current.y *= 0.94
+      velocity.current.x *= 0.94
     }
 
     // Spin outer gyroscope rings
     if (ring1.current) {
-      ring1.current.rotation.z += dt * 0.4
-      ring1.current.rotation.x += dt * 0.2
+      ring1.current.rotation.z += dt * 0.45
+      ring1.current.rotation.x += dt * 0.25
     }
     if (ring2.current) {
-      ring2.current.rotation.y += dt * 0.35
-      ring2.current.rotation.z -= dt * 0.25
+      ring2.current.rotation.y += dt * 0.4
+      ring2.current.rotation.z -= dt * 0.3
     }
 
     /* ---- layout positioning ---- */
     const narrow = viewport.aspect < 1.05
-    const heroScale = narrow ? 0.85 : Math.min(1.15, viewport.width / 9)
+    const heroScale = narrow ? 0.65 : Math.min(0.85, viewport.width / 11)
 
-    const heroX = narrow ? 0 : viewport.width / 2 - 2.2
-    const heroY = narrow ? 1.4 : 0.1
+    const heroX = narrow ? 0 : viewport.width / 2 - 2.0
+    const heroY = narrow ? 1.3 : 0.08
 
-    const dockX = viewport.width / 2 - (narrow ? 0.7 : 1.25)
-    const dockY = viewport.height / 2 - (narrow ? 1.2 : 1.45)
-    const dockScale = heroScale * 0.48
+    const dockX = viewport.width / 2 - (narrow ? 0.65 : 1.15)
+    const dockY = viewport.height / 2 - (narrow ? 1.1 : 1.4)
+    const dockScale = heroScale * 0.42
 
     let x = heroX
     let y = heroY
@@ -231,7 +226,7 @@ export default function PhotoSphere({ imageSrc = '/profile.png' }) {
 
   return (
     <group ref={group}>
-      {/* Solid 3D Interactive Photo Ball */}
+      {/* Solid 3D Interactive Photo Ball - Reduced Sleek Size */}
       <mesh
         ref={sphereMesh}
         onPointerDown={onPointerDown}
@@ -239,7 +234,7 @@ export default function PhotoSphere({ imageSrc = '/profile.png' }) {
         onPointerOut={() => setHovered(false)}
         cursor={hovered ? 'grab' : 'auto'}
       >
-        <sphereGeometry args={[1.25, 64, 64]} />
+        <sphereGeometry args={[0.88, 64, 64]} />
         <meshStandardMaterial
           map={sphereTexture}
           roughness={0.22}
@@ -250,7 +245,7 @@ export default function PhotoSphere({ imageSrc = '/profile.png' }) {
 
       {/* Cybernetic Gyroscope Ring 1 */}
       <mesh ref={ring1} rotation={[Math.PI / 4, 0, 0]}>
-        <torusGeometry args={[1.56, 0.016, 16, 100]} />
+        <torusGeometry args={[1.14, 0.012, 16, 100]} />
         <meshStandardMaterial
           color="#22d3ee"
           emissive="#22d3ee"
@@ -262,7 +257,7 @@ export default function PhotoSphere({ imageSrc = '/profile.png' }) {
 
       {/* Cybernetic Gyroscope Ring 2 */}
       <mesh ref={ring2} rotation={[-Math.PI / 3, Math.PI / 6, 0]}>
-        <torusGeometry args={[1.68, 0.012, 16, 100]} />
+        <torusGeometry args={[1.24, 0.010, 16, 100]} />
         <meshStandardMaterial
           color="#8b5cf6"
           emissive="#8b5cf6"
@@ -273,7 +268,7 @@ export default function PhotoSphere({ imageSrc = '/profile.png' }) {
       </mesh>
 
       {/* Outer Soft Light Halo */}
-      <mesh scale={1.85}>
+      <mesh scale={1.35}>
         <sphereGeometry args={[1, 32, 32]} />
         <meshBasicMaterial
           color="#22d3ee"

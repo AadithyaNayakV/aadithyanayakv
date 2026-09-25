@@ -44,17 +44,28 @@ export default function About() {
   const leetcode = site.socials.find((s) => s.label === 'LeetCode')
 
   return (
-    <section id="about" ref={scope} className="relative z-10 py-28 md:py-36">
+    <section id="about" ref={scope} className="relative z-10 py-24 md:py-32">
       <div className="shell">
-        <SectionHeading
-          index="01"
-          title="About Me"
-          lede="Full-Stack Developer and AI Engineer building resilient architectures and intelligent platforms."
-        />
+        {/* Distinctive Ambient Glass Background for About section */}
+        <div className="relative rounded-3xl border border-edge/60 bg-surface/45 p-7 md:p-12 backdrop-blur-md shadow-xs overflow-hidden">
+          {/* Subtle Cyber Glow Accents */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-28 -right-28 size-80 rounded-full bg-accent/12 blur-3xl"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-28 -left-28 size-80 rounded-full bg-signal/12 blur-3xl"
+          />
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-12 items-start">
-          {/* Left Column: Narrative Bio */}
-          <div className="lg:col-span-8 space-y-6">
+          <SectionHeading
+            title="About Me"
+            lede="Full-Stack Developer and AI Engineer building resilient architectures and intelligent platforms."
+          />
+
+          <div className="mt-12 grid gap-12 lg:grid-cols-12 items-start">
+            {/* Left Column: Narrative Bio */}
+            <div className="lg:col-span-8 space-y-6">
             {site.bio.map((paragraph, i) => (
               <p
                 key={i}
@@ -145,6 +156,7 @@ export default function About() {
           </div>
         </div>
       </div>
-    </section>
-  )
+    </div>
+  </section>
+)
 }
