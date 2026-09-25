@@ -72,6 +72,16 @@ html.dark,
   --color-muted: #8b8b96;
 }
 
+/* Direct high-priority theme background binding */
+html,
+body {
+  background-color: var(--color-void);
+  color: var(--color-ink);
+  transition: background-color 250ms ease, color 250ms ease;
+  margin: 0;
+  padding: 0;
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -79,7 +89,8 @@ html.dark,
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: auto; /* Lenis owns scrolling */
-    transition: background-color 300ms ease, color 300ms ease;
+    background-color: var(--color-void);
+    color: var(--color-ink);
   }
 
   body {

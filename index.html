@@ -27,18 +27,18 @@
     />
 
     <title>Aadithya Nayak V — Full-Stack Developer & AI Engineer</title>
-    <style>
-      :root, html, body {
-        background-color: #f6f7fb;
-        color: #0f172a;
-        margin: 0;
-        padding: 0;
-      }
-      html.dark, [data-theme='dark'], .dark {
-        background-color: #0a0a0f !important;
-        color: #f4f4f7 !important;
-      }
-    </style>
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('portfolio-theme');
+          var theme = (saved === 'dark' || saved === 'light') ? saved : 'light';
+          var d = document.documentElement;
+          d.classList.remove('light', 'dark');
+          d.classList.add(theme);
+          d.setAttribute('data-theme', theme);
+        } catch(e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
