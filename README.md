@@ -12,7 +12,7 @@
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-13-FF0055?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
 [![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
 
-[**Explore Live Portfolio »**](https://aadi-dev.vercel.app/)
+[**Explore Live Portfolio »**](https://aadithyanayakv.vercel.app/)
 
 </div>
 
@@ -99,8 +99,8 @@ aadi-dev/
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/AadithyaNayakV/aadi-dev.git
-cd aadi-dev
+git clone https://github.com/AadithyaNayakV/aadithyanayakv.git
+cd aadithyanayakv
 ```
 
 ### 2. Install dependencies
@@ -143,7 +143,7 @@ This portfolio operates on a self-updating automation loop:
 
 ## 📬 Connect with Me
 
-- **Portfolio**: [aadi-dev.vercel.app](https://aadi-dev.vercel.app/)
+- **Portfolio**: [aadithyanayakv.vercel.app](https://aadithyanayakv.vercel.app/)
 - **GitHub**: [@AadithyaNayakV](https://github.com/AadithyaNayakV)
 - **LinkedIn**: [Aadithya Nayak V](https://linkedin.com/in/aadithya-nayak-v-3533a4293)
 - **LeetCode**: [@DKSbFeaWen](https://leetcode.com/u/DKSbFeaWen/)

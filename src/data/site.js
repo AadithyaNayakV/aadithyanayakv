@@ -13,6 +13,7 @@ export const site = {
 
   location: 'Mangaluru, Karnataka, India',
   availability: 'Open to Full-Stack & AI Engineering Roles',
+  url: 'https://aadithyanayakv.vercel.app',
 
   bio: [
     'I am a Computer Science student at Sahyadri College of Engineering and Management (9.52 CGPA) and former Software Engineering Intern at Datavex.ai (completed September 2026), where I engineered scalable frontend modules and backend AI integrations for an AI-powered CRM and multi-tenant SaaS platform.',
