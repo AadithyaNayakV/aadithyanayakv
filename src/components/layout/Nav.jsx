@@ -94,11 +94,6 @@ export default function Nav() {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-linear-to-b from-void via-void/80 to-transparent"
-        />
-
         <div className="shell relative flex items-center justify-between py-4">
           <div className="flex items-center gap-3">
             <a

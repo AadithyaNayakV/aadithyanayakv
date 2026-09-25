@@ -48,20 +48,9 @@
 }
 
 /* ==========================================================================
-   Theme variables (Dark default, Light override)
+   Theme variables (Light default, Dark override)
    ========================================================================== */
 :root {
-  --color-void: #0a0a0f;
-  --color-surface: #12121a;
-  --color-edge: #22222e;
-  --color-accent: #8b5cf6;
-  --color-signal: #22d3ee;
-  --color-ink: #f4f4f7;
-  --color-muted: #8b8b96;
-}
-
-html.light,
-[data-theme='light'] {
   --color-void: #f6f7fb;
   --color-surface: #ffffff;
   --color-edge: #e2e4ef;
@@ -69,6 +58,17 @@ html.light,
   --color-signal: #0284c7;
   --color-ink: #0f172a;
   --color-muted: #475569;
+}
+
+html.dark,
+[data-theme='dark'] {
+  --color-void: #0a0a0f;
+  --color-surface: #12121a;
+  --color-edge: #22222e;
+  --color-accent: #8b5cf6;
+  --color-signal: #22d3ee;
+  --color-ink: #f4f4f7;
+  --color-muted: #8b8b96;
 }
 
 /* ==========================================================================

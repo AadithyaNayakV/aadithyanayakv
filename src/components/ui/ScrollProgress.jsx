@@ -9,7 +9,7 @@ export default function ScrollProgress() {
 
   return (
     <div
-      className="pointer-events-none fixed top-0 inset-x-0 z-50 h-[3px] bg-void/50"
+      className="pointer-events-none fixed top-0 inset-x-0 z-50 h-[3px] bg-transparent"
       aria-hidden="true"
     >
       <div

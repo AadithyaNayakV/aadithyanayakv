@@ -4,6 +4,7 @@ import { site } from '../../data/site'
 import { EASE, gsap } from '../../lib/gsapConfig'
 import { scrollToSection } from '../../lib/lenis'
 import { motionState } from '../../lib/motionState'
+import ProfileBookAvatar from '../ui/ProfileBookAvatar'
 
 /**
  * Hero section: Clean, bold typography and positioning on the left,
@@ -134,15 +135,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Side: Reserved for the 3D particle centerpiece */}
-        <div className="md:col-span-4 lg:col-span-5 lg:justify-self-end">
-          <button
-            type="button"
-            onClick={() => window.dispatchEvent(new CustomEvent('centerpiece:activate'))}
-            className="sr-only rounded-md border border-edge bg-surface px-4 py-2 text-sm text-ink focus:not-sr-only focus:relative"
-          >
-            Scatter the centrepiece
-          </button>
+        {/* Right Side: Interactive Dev Book Avatar */}
+        <div data-hero-line className="md:col-span-4 lg:col-span-5 flex justify-center lg:justify-end">
+          <ProfileBookAvatar />
         </div>
       </div>
     </section>

@@ -4,7 +4,6 @@ import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { gsap, ScrollTrigger } from '../../lib/gsapConfig'
 import { useTheme } from '../../context/ThemeContext'
 import Particles from './Particles'
-import PhotoSphere from './PhotoSphere'
 import SceneLighting from './SceneLighting'
 
 export default function Scene() {
@@ -49,7 +48,6 @@ export default function Scene() {
         <SceneLighting />
         <Suspense fallback={null}>
           <Particles />
-          <PhotoSphere imageSrc="/profile.png" />
         </Suspense>
       </Canvas>
     </div>
