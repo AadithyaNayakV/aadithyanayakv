@@ -61,7 +61,8 @@
 }
 
 html.dark,
-[data-theme='dark'] {
+[data-theme='dark'],
+.dark {
   --color-void: #0a0a0f;
   --color-surface: #12121a;
   --color-edge: #22222e;

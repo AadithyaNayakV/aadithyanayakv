@@ -29,8 +29,6 @@ export default function Scene() {
     }
   }, [reducedMotion])
 
-  const bgColor = theme === 'light' ? '#f6f7fb' : '#0a0a0f'
-
   return (
     <div
       ref={wrapper}
@@ -39,12 +37,11 @@ export default function Scene() {
     >
       <Canvas
         dpr={[1, 1.8]}
-        gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
+        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         camera={{ position: [0, 0, 6], fov: 45, near: 0.1, far: 100 }}
         eventSource={eventSource ?? undefined}
         eventPrefix="client"
       >
-        <color attach="background" args={[bgColor]} />
         <SceneLighting />
         <Suspense fallback={null}>
           <Particles />

@@ -18,9 +18,11 @@ export function ThemeProvider({ children }) {
     const root = document.documentElement
     if (theme === 'light') {
       root.classList.add('light')
+      root.classList.remove('dark')
       root.setAttribute('data-theme', 'light')
     } else {
       root.classList.remove('light')
+      root.classList.add('dark')
       root.setAttribute('data-theme', 'dark')
     }
     localStorage.setItem('portfolio-theme', theme)
