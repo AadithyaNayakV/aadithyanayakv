@@ -229,9 +229,9 @@ export default function ProjectCard({ project }) {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-linear-to-t from-surface/40 to-transparent" />
 
         {/* Year tag */}
-        <div className="absolute top-3 right-3 rounded-md bg-void/80 px-2 py-0.5 font-mono text-xs text-muted backdrop-blur-md border border-edge/60">
+        {/* <div className="absolute top-3 right-3 rounded-md bg-void/80 px-2 py-0.5 font-mono text-xs text-muted backdrop-blur-md border border-edge/60">
           {project.year}
-        </div>
+        </div> */}
       </div>
 
       {/* Content */}

@@ -1,6 +1,7 @@
 import { ArrowDownToLine, ArrowUpRight, Code2, ExternalLink, Mail } from 'lucide-react'
 import { useLayoutEffect, useRef } from 'react'
 import { site } from '../../data/site'
+import developerData from '../../data/developer-data.json'
 import { EASE, gsap } from '../../lib/gsapConfig'
 import { scrollToSection } from '../../lib/lenis'
 import { motionState } from '../../lib/motionState'
@@ -118,7 +119,9 @@ export default function Hero() {
               >
                 <Code2 className="size-4 text-signal transition-all duration-200 group-hover:rotate-12 group-hover:text-accent" />
                 <span>LeetCode</span>
-                <span className="font-mono text-xs text-muted">700+</span>
+                <span className="font-mono text-xs text-muted">
+                  {developerData.leetcode?.totalSolved || '700'}+
+                </span>
                 <ExternalLink className="size-3 text-muted transition-colors duration-200 group-hover:text-signal" />
               </a>
             ) : null}

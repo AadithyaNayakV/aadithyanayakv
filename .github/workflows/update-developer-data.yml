@@ -41,6 +41,6 @@ jobs:
             echo "No changes detected in developer-data.json. Skipping commit."
           else
             echo "Changes detected in developer-data.json. Committing and pushing..."
-            git commit -m "chore(data): auto-update github & leetcode developer data [skip ci]"
+            git commit -m "chore(data): auto-update github & leetcode developer data"
             git push
           fi

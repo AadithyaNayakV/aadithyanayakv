@@ -9,17 +9,20 @@ import {
   Trophy,
 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import developerData from '../../data/developer-data.json'
 import { site } from '../../data/site'
+
+const totalSolved = developerData.leetcode?.totalSolved || 709
 
 const pages = [
   {
     id: 'leetcode',
     tag: 'Algorithmic Mastery',
     title: 'LeetCode Problem Solving',
-    subtitle: '700+ Problems Solved (@DKSbFeaWen)',
+    subtitle: `${totalSolved}+ Problems Solved (@DKSbFeaWen)`,
     content: {
       stats: [
-        { label: 'Total Solved', val: '700+', color: 'text-signal' },
+        { label: 'Total Solved', val: `${totalSolved}`, color: 'text-signal' },
         { label: 'Handle', val: '@DKSbFeaWen', color: 'text-accent' },
         { label: 'Focus', val: 'DSA & Systems', color: 'text-emerald-500' },
       ],
