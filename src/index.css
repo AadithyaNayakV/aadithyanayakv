@@ -1,0 +1,260 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   Design tokens — 04-design-system.md
+   Colour, type scale (1.25 ratio) and spacing live here and nowhere else.
+   ========================================================================== */
+@theme {
+  /* Colour. Named `void` rather than `base` so `bg-void` cannot collide with
+     the `text-base` font-size utility. */
+  --color-void: #0a0a0f;
+  --color-surface: #12121a;
+  --color-edge: #22222e;
+  --color-accent: #8b5cf6; /* violet — 3D centrepiece, active nav, one CTA */
+  --color-signal: #22d3ee; /* cyan — unfold interaction + timeline line only */
+  --color-ink: #e4e4e7;
+  --color-muted: #8b8b96;
+
+  /* Type */
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* One deliberate 1.25 scale, base 16px. No eyeballed sizes per section. */
+  --text-xs: 0.64rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.8rem;
+  --text-sm--line-height: 1.55;
+  --text-base: 1rem;
+  --text-base--line-height: 1.7;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.6;
+  --text-xl: 1.5625rem;
+  --text-xl--line-height: 1.4;
+  --text-2xl: 1.953rem;
+  --text-2xl--line-height: 1.25;
+  --text-3xl: 2.441rem;
+  --text-3xl--line-height: 1.15;
+  --text-4xl: 3.052rem;
+  --text-4xl--line-height: 1.08;
+  --text-5xl: 3.815rem;
+  --text-5xl--line-height: 1.04;
+  --text-6xl: 4.768rem;
+  --text-6xl--line-height: 1;
+  --text-7xl: 5.96rem;
+  --text-7xl--line-height: 0.98;
+
+  /* Motion */
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-swift: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: auto; /* Lenis owns scrolling */
+  }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 35%, transparent);
+    color: var(--color-ink);
+  }
+
+  /* Accessibility floor: every interactive element has a visible keyboard state. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-void);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-edge);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2e2e3c;
+  }
+}
+
+/* ==========================================================================
+   Components — the small custom layer Tailwind can't express
+   ========================================================================== */
+@layer components {
+  /* Responsive, spacious content container utilizing modern screen real estate */
+  .shell {
+    width: 100%;
+    max-width: 82rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .shell {
+      padding-inline: 3.5rem;
+    }
+  }
+
+  /* Body copy stays comfortable and readable */
+  .measure {
+    max-width: 68ch;
+  }
+
+  /* Glow effects */
+  .glow-accent {
+    box-shadow:
+      0 0 24px -4px color-mix(in srgb, var(--color-accent) 55%, transparent),
+      0 0 64px -12px color-mix(in srgb, var(--color-accent) 35%, transparent);
+  }
+
+  .glow-signal {
+    box-shadow:
+      0 0 12px 0 color-mix(in srgb, var(--color-signal) 60%, transparent),
+      0 0 32px 0 color-mix(in srgb, var(--color-signal) 25%, transparent);
+  }
+
+  /* Links in body text: underline draws in from the left, fast. */
+  .link-draw {
+    position: relative;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .link-draw::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 150ms var(--ease-swift);
+  }
+
+  .link-draw:hover::after,
+  .link-draw:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  /* Surfaces with refined border and subtle backdrop blur */
+  .panel {
+    background: color-mix(in srgb, var(--color-surface) 85%, transparent);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--color-edge);
+  }
+
+  .panel-interactive {
+    background: color-mix(in srgb, var(--color-surface) 80%, transparent);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--color-edge);
+    transition: border-color 250ms ease, box-shadow 250ms ease, transform 250ms ease;
+  }
+
+  .panel-interactive:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-edge));
+    box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.5), 0 0 20px -6px color-mix(in srgb, var(--color-accent) 25%, transparent);
+  }
+}
+
+/* ==========================================================================
+   Custom cursor — fine pointers only, never on touch
+   ========================================================================== */
+@media (pointer: fine) {
+  html[data-cursor='on'],
+  html[data-cursor='on'] * {
+    cursor: none !important;
+  }
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 100;
+  border-radius: 9999px;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--color-ink);
+}
+
+.cursor-ring {
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border: 1px solid color-mix(in srgb, var(--color-ink) 35%, transparent);
+  transition:
+    width 180ms var(--ease-swift),
+    height 180ms var(--ease-swift),
+    margin 180ms var(--ease-swift),
+    border-color 180ms var(--ease-swift),
+    background-color 180ms var(--ease-swift);
+}
+
+.cursor-ring[data-active='true'] {
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  border-color: color-mix(in srgb, var(--color-accent) 70%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+}
+
+/* ==========================================================================
+   Reduced motion — scrubbed 3D transform and load sequence are disabled in JS;
+   this covers everything CSS-driven.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
