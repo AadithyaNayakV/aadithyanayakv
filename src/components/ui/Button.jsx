@@ -50,7 +50,7 @@ export default function Button({
       <span className="relative">{children}</span>
       {Icon ? (
         <Icon
-          className={`relative size-4 shrink-0 transition-transform duration-200 ease-out ${iconClass}`}
+          className={`relative size-4 shrink-0 transition-all duration-200 ease-out group-hover:text-signal ${iconClass}`}
           strokeWidth={1.75}
         />
       ) : null}

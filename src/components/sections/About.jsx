@@ -49,7 +49,7 @@ export default function About() {
         <SectionHeading
           index="01"
           title="About Me"
-          lede="Frontend and full-stack engineer building AI systems and real-time platforms."
+          lede="Full-Stack Developer and AI Engineer building resilient architectures and intelligent platforms."
         />
 
         <div className="mt-14 grid gap-12 lg:grid-cols-12 items-start">
@@ -72,68 +72,76 @@ export default function About() {
             <SpotlightCard
               spotlightColor="rgba(139, 92, 246, 0.2)"
               borderColor="rgba(139, 92, 246, 0.5)"
-              className="p-5"
+              className="group p-5"
             >
-              <div className="flex items-center gap-3">
-                <div className="grid size-9 place-items-center rounded-lg bg-accent/15 text-accent">
-                  <GraduationCap className="size-5" />
+              <a href="#education" className="block">
+                <div className="flex items-center gap-3">
+                  <div className="grid size-9 place-items-center rounded-lg bg-accent/15 text-accent transition-colors duration-200 group-hover:bg-signal/15 group-hover:text-signal">
+                    <GraduationCap className="size-5 transition-colors duration-200 group-hover:text-signal" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-base font-medium text-ink transition-colors duration-200 group-hover:text-accent">
+                      B.E. Computer Science
+                    </h3>
+                    <span className="font-mono text-xs text-signal font-medium">CGPA: 9.52</span>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-display text-base font-medium text-ink">
-                    B.E. Computer Science
-                  </h3>
-                  <span className="font-mono text-xs text-signal font-medium">CGPA: 9.52</span>
+                <p className="mt-3 text-xs text-muted leading-relaxed">
+                  Sahyadri College of Engineering & Management, Mangaluru
+                </p>
+              </a>
+            </SpotlightCard>
+
+            {/* Experience Card */}
+            <SpotlightCard
+              spotlightColor="rgba(34, 211, 238, 0.2)"
+              borderColor="rgba(34, 211, 238, 0.45)"
+              className="group p-5"
+            >
+              <a href="#experience" className="block">
+                <div className="flex items-center gap-3">
+                  <div className="grid size-9 place-items-center rounded-lg bg-signal/15 text-signal transition-colors duration-200 group-hover:bg-accent/15 group-hover:text-accent">
+                    <MapPin className="size-5 transition-colors duration-200 group-hover:text-accent" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-base font-medium text-ink transition-colors duration-200 group-hover:text-signal">
+                      Ex-SWE Intern @ Datavex.ai
+                    </h3>
+                    <span className="font-mono text-xs text-muted">Sept 2025 – Sept 2026</span>
+                  </div>
                 </div>
-              </div>
-              <p className="mt-3 text-xs text-muted leading-relaxed">
-                Sahyadri College of Engineering & Management, Mangaluru
-              </p>
+                <p className="mt-3 text-xs text-muted leading-relaxed">
+                  AI-powered CRM frontend architecture, Next.js, FastAPI & Azure deployment
+                </p>
+              </a>
             </SpotlightCard>
 
             {/* LeetCode Card */}
             {leetcode ? (
               <SpotlightCard
-                spotlightColor="rgba(34, 211, 238, 0.22)"
-                borderColor="rgba(34, 211, 238, 0.6)"
+                spotlightColor="rgba(139, 92, 246, 0.22)"
+                borderColor="rgba(139, 92, 246, 0.6)"
+                className="group"
               >
                 <a
-                  href={leetcode.href}
-                  target="_blank"
-                  rel="noreferrer noopener"
+                  href="#leetcode"
                   className="flex items-center justify-between p-5 cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="grid size-9 place-items-center rounded-lg bg-signal/15 text-signal transition-transform duration-200 group-hover:scale-110">
-                      <Code2 className="size-5" />
+                    <div className="grid size-9 place-items-center rounded-lg bg-accent/15 text-accent transition-all duration-200 group-hover:scale-110 group-hover:bg-signal/15 group-hover:text-signal">
+                      <Code2 className="size-5 transition-colors duration-200 group-hover:text-signal" />
                     </div>
                     <div>
-                      <h3 className="font-display text-base font-medium text-ink group-hover:text-signal transition-colors">
-                        LeetCode Profile
+                      <h3 className="font-display text-base font-medium text-ink transition-colors group-hover:text-accent">
+                        LeetCode Problem Solving
                       </h3>
-                      <span className="font-mono text-xs text-muted">@{leetcode.handle}</span>
+                      <span className="font-mono text-xs text-signal font-medium">700+ Problems Solved</span>
                     </div>
                   </div>
-                  <ExternalLink className="size-4 text-muted transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-signal" />
+                  <ExternalLink className="size-4 text-muted transition-all group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-signal" />
                 </a>
               </SpotlightCard>
             ) : null}
-
-            {/* Location Card */}
-            <SpotlightCard
-              spotlightColor="rgba(34, 211, 238, 0.15)"
-              borderColor="rgba(34, 211, 238, 0.4)"
-              className="p-5"
-            >
-              <div className="flex items-center gap-3">
-                <div className="grid size-9 place-items-center rounded-lg bg-surface text-ink">
-                  <MapPin className="size-5 text-signal" />
-                </div>
-                <div>
-                  <h3 className="font-display text-base font-medium text-ink">Location</h3>
-                  <span className="font-mono text-xs text-muted">{site.location}</span>
-                </div>
-              </div>
-            </SpotlightCard>
           </div>
         </div>
       </div>

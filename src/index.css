@@ -5,15 +5,13 @@
    Colour, type scale (1.25 ratio) and spacing live here and nowhere else.
    ========================================================================== */
 @theme {
-  /* Colour. Named `void` rather than `base` so `bg-void` cannot collide with
-     the `text-base` font-size utility. */
-  --color-void: #0a0a0f;
-  --color-surface: #12121a;
-  --color-edge: #22222e;
-  --color-accent: #8b5cf6; /* violet — 3D centrepiece, active nav, one CTA */
-  --color-signal: #22d3ee; /* cyan — unfold interaction + timeline line only */
-  --color-ink: #e4e4e7;
-  --color-muted: #8b8b96;
+  --color-void: var(--color-void);
+  --color-surface: var(--color-surface);
+  --color-edge: var(--color-edge);
+  --color-accent: var(--color-accent);
+  --color-signal: var(--color-signal);
+  --color-ink: var(--color-ink);
+  --color-muted: var(--color-muted);
 
   /* Type */
   --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
@@ -50,12 +48,37 @@
 }
 
 /* ==========================================================================
+   Theme variables (Dark default, Light override)
+   ========================================================================== */
+:root {
+  --color-void: #0a0a0f;
+  --color-surface: #12121a;
+  --color-edge: #22222e;
+  --color-accent: #8b5cf6;
+  --color-signal: #22d3ee;
+  --color-ink: #f4f4f7;
+  --color-muted: #8b8b96;
+}
+
+html.light,
+[data-theme='light'] {
+  --color-void: #f6f7fb;
+  --color-surface: #ffffff;
+  --color-edge: #e2e4ef;
+  --color-accent: #7c3aed;
+  --color-signal: #0284c7;
+  --color-ink: #0f172a;
+  --color-muted: #475569;
+}
+
+/* ==========================================================================
    Base
    ========================================================================== */
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: auto; /* Lenis owns scrolling */
+    transition: background-color 300ms ease, color 300ms ease;
   }
 
   body {

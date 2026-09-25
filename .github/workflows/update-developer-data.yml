@@ -1,0 +1,46 @@
+name: Update Developer Data
+
+on:
+  schedule:
+    # Run once daily at 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch latest GitHub & LeetCode stats
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/fetch-developer-data.mjs
+
+      - name: Check for changes and commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Stage the developer-data.json file only
+          git add src/data/developer-data.json
+          
+          # Only commit and push if src/data/developer-data.json actually changed
+          if git diff --staged --quiet; then
+            echo "No changes detected in developer-data.json. Skipping commit."
+          else
+            echo "Changes detected in developer-data.json. Committing and pushing..."
+            git commit -m "chore(data): auto-update github & leetcode developer data [skip ci]"
+            git push
+          fi

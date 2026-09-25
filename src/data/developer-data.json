@@ -1,0 +1,128 @@
+{
+  "lastUpdated": "2026-09-25T12:26:08.052Z",
+  "github": {
+    "username": "AadithyaNayakV",
+    "name": "Aadithya Nayak V",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/181184562?v=4",
+    "profileUrl": "https://github.com/AadithyaNayakV",
+    "publicRepos": 13,
+    "followers": 9,
+    "featuredRepos": [
+      {
+        "id": 1201929905,
+        "name": "Startup Foundry",
+        "rawName": "Startup-Foundary",
+        "description": "AI-Powered Venture Intelligence Platform with Kafka microservices, 7B LLM scoring, and Next.js frontend.",
+        "language": "JavaScript",
+        "stars": 0,
+        "forks": 0,
+        "url": "https://github.com/AadithyaNayakV/Startup-Foundary",
+        "updatedAt": "2026-09-22T16:03:15Z",
+        "topics": [
+          "fastapi",
+          "kafka",
+          "nextjs",
+          "ai",
+          "ollama"
+        ]
+      },
+      {
+        "id": 1018958118,
+        "name": "FairPlace",
+        "rawName": "FairPlace",
+        "description": "Full-stack AI-moderated marketplace platform with real-time WebSockets and RAG pricing assistance.",
+        "language": "JavaScript",
+        "stars": 0,
+        "forks": 0,
+        "url": "https://github.com/AadithyaNayakV/FairPlace",
+        "updatedAt": "2026-08-17T15:07:16Z",
+        "topics": [
+          "react",
+          "nodejs",
+          "websockets",
+          "rag"
+        ]
+      },
+      {
+        "id": 1339873358,
+        "name": "JARVIS",
+        "rawName": "Jarvis",
+        "description": "Local voice-driven desktop assistant with offline Vosk speech recognition and Gemini API tool calling.",
+        "language": "Python",
+        "stars": 0,
+        "forks": 0,
+        "url": "https://github.com/AadithyaNayakV/Jarvis",
+        "updatedAt": "2026-08-24T02:19:46Z",
+        "topics": [
+          "python",
+          "gemini-api",
+          "vosk",
+          "automation"
+        ]
+      },
+      {
+        "id": 1079767662,
+        "name": "FinDad (FinanceBot)",
+        "rawName": "FinanceBot",
+        "description": "AI financial guidance assistant with multi-tier RAG, Redis semantic caching, and ChromaDB vector store.",
+        "language": "JavaScript",
+        "stars": 0,
+        "forks": 0,
+        "url": "https://github.com/AadithyaNayakV/FinanceBot",
+        "updatedAt": "2026-09-22T15:53:51Z",
+        "topics": [
+          "fastapi",
+          "langchain",
+          "rag",
+          "chromadb",
+          "redis"
+        ]
+      },
+      {
+        "id": 1051697210,
+        "name": "DSA LeetCode Solutions",
+        "rawName": "DSA-leetcode-",
+        "description": "Curated repository of algorithmic solutions and data structures implementations.",
+        "language": "Java",
+        "stars": 0,
+        "forks": 0,
+        "url": "https://github.com/AadithyaNayakV/DSA-leetcode-",
+        "updatedAt": "2026-09-05T12:51:26Z",
+        "topics": [
+          "algorithms",
+          "data-structures",
+          "leetcode"
+        ]
+      },
+      {
+        "id": 1133550957,
+        "name": "MCP Web Scraper",
+        "rawName": "MCP-for-scraping",
+        "description": "Model Context Protocol server for intelligent web scraping and structured extraction.",
+        "language": "Python",
+        "stars": 0,
+        "forks": 0,
+        "url": "https://github.com/AadithyaNayakV/MCP-for-scraping",
+        "updatedAt": "2026-08-24T02:21:25Z",
+        "topics": [
+          "mcp",
+          "python",
+          "scraping",
+          "ai"
+        ]
+      }
+    ]
+  },
+  "leetcode": {
+    "username": "DKSbFeaWen",
+    "profileUrl": "https://leetcode.com/u/DKSbFeaWen/",
+    "totalSolved": 706,
+    "easySolved": 345,
+    "mediumSolved": 324,
+    "hardSolved": 37,
+    "ranking": 96611,
+    "contestRating": null,
+    "contestRank": null,
+    "topPercentage": null
+  }
+}

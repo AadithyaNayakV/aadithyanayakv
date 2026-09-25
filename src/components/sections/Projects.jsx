@@ -43,7 +43,7 @@ export default function Projects() {
     <section id="projects" ref={scope} className="relative z-10 py-28 md:py-36">
       <div className="shell">
         <SectionHeading
-          index="03"
+          index="04"
           title="Featured Projects"
           lede="Production architectures built end to end, focusing on real-time event distribution, AI inference moderation, and reactive user interfaces."
         />

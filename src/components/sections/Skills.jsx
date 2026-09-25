@@ -1,108 +1,155 @@
 import { motion } from 'framer-motion'
-import { useLayoutEffect, useRef } from 'react'
-import { skillGroups } from '../../data/skills'
-import { REVEAL_START, gsap } from '../../lib/gsapConfig'
-import { motionState } from '../../lib/motionState'
+import { Brain, Cloud, Code, Database, Sparkles } from 'lucide-react'
+import { useState } from 'react'
+import { skillCategories } from '../../data/skills'
 import SectionHeading from '../ui/SectionHeading'
 import SpotlightCard from '../ui/SpotlightCard'
 
-/**
- * Skills Section: Balanced, full-width responsive grid of technical capabilities.
- * Cards tilt smoothly on hover/touch with dynamic spotlight, and skill chips react with tactile bounce.
- */
+const CATEGORY_ICONS = {
+  fullstack: Code,
+  'ai-engineering': Brain,
+  'data-storage': Database,
+  'cloud-devops': Cloud,
+}
+
 export default function Skills() {
-  const scope = useRef(null)
+  const [selectedCategory, setSelectedCategory] = useState('all')
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const q = gsap.utils.selector(scope)
-      const groups = q('[data-skill-group]')
-
-      if (motionState.reducedMotion) {
-        gsap.set(q('[data-skill-item]'), { opacity: 1, x: 0, y: 0, rotate: 0, scale: 1 })
-        gsap.set(groups, { opacity: 1 })
-        return
-      }
-
-      const rand = gsap.utils.random
-
-      groups.forEach((group, index) => {
-        const items = group.querySelectorAll('[data-skill-item]')
-
-        gsap.set(items, {
-          opacity: 0,
-          scale: 0.88,
-          x: () => rand(-24, 24),
-          y: () => rand(-16, 16),
-        })
-
-        gsap.to(items, {
-          opacity: 1,
-          scale: 1,
-          x: 0,
-          y: 0,
-          duration: 0.7,
-          ease: 'back.out(1.4)',
-          stagger: { each: 0.03, from: 'random' },
-          delay: index * 0.07,
-          scrollTrigger: { trigger: scope.current, start: REVEAL_START },
-        })
-      })
-    }, scope)
-
-    return () => ctx.revert()
-  }, [])
+  const displayedCategories =
+    selectedCategory === 'all'
+      ? skillCategories
+      : skillCategories.filter((c) => c.id === selectedCategory)
 
   return (
-    <section id="skills" ref={scope} className="relative z-10 py-28 md:py-36">
+    <section id="skills" className="relative z-10 py-28 md:py-36">
       <div className="shell">
-        <SectionHeading
-          index="02"
-          title="Technical Stack"
-          lede="Technologies and frameworks engineered in production systems and end-to-end projects."
-        />
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <SectionHeading
+            index="05"
+            title="Technical Skills"
+            lede="Organized around Full-Stack Engineering, Applied AI Systems, and Distributed Infrastructure."
+          />
 
-        <div className="mt-14 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
-          {skillGroups.map((group) => (
-            <div key={group.id} data-skill-group>
-              <SpotlightCard
-                spotlightColor="rgba(139, 92, 246, 0.18)"
-                borderColor="rgba(139, 92, 246, 0.4)"
-                className="p-6 h-full"
+          {/* Category Filter Pills */}
+          <div className="flex flex-wrap items-center gap-1.5 rounded-full border border-edge bg-surface/80 p-1 backdrop-blur-md self-start md:self-auto">
+            <button
+              type="button"
+              onClick={() => setSelectedCategory('all')}
+              className={`relative rounded-full px-3.5 py-1.5 font-mono text-xs transition-colors ${
+                selectedCategory === 'all'
+                  ? 'text-ink font-semibold'
+                  : 'text-muted hover:text-ink'
+              }`}
+            >
+              {selectedCategory === 'all' ? (
+                <motion.span
+                  layoutId="skills-pill"
+                  className="absolute inset-0 rounded-full bg-accent/20 border border-accent/40"
+                  transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                />
+              ) : null}
+              <span className="relative z-10">All Areas</span>
+            </button>
+
+            {skillCategories.map((cat) => (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`relative rounded-full px-3.5 py-1.5 font-mono text-xs transition-colors ${
+                  selectedCategory === cat.id
+                    ? 'text-ink font-semibold'
+                    : 'text-muted hover:text-ink'
+                }`}
               >
-                <div className="flex items-center justify-between border-b border-edge/80 pb-3">
-                  <h3 className="font-display text-lg font-medium text-ink">
-                    {group.label}
-                  </h3>
-                  <span className="font-mono text-xs text-muted">
-                    {group.items.length} skills
-                  </span>
-                </div>
+                {selectedCategory === cat.id ? (
+                  <motion.span
+                    layoutId="skills-pill"
+                    className="absolute inset-0 rounded-full bg-accent/20 border border-accent/40"
+                    transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                  />
+                ) : null}
+                <span className="relative z-10">{cat.title.split(' ')[0]}</span>
+              </button>
+            ))}
+          </div>
+        </div>
 
-                <ul className="mt-5 flex flex-wrap gap-2.5">
-                  {group.items.map((skill) => (
-                    <motion.li
-                      key={skill.name}
-                      data-skill-item
-                      whileHover={{ scale: 1.07, y: -2 }}
-                      whileTap={{ scale: 0.94 }}
-                      transition={{ type: 'spring', stiffness: 450, damping: 20 }}
-                      className={`cursor-default flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-mono text-xs transition-colors duration-150 ${
-                        skill.emphasis
-                          ? 'border-accent/40 bg-accent/15 text-ink shadow-[0_0_12px_-4px_rgba(139,92,246,0.35)]'
-                          : 'border-edge bg-surface/80 text-muted hover:border-edge/90 hover:text-ink'
-                      }`}
-                    >
-                      {skill.emphasis ? (
-                        <span className="size-1.5 rounded-full bg-signal shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
-                      ) : null}
-                      <span>{skill.name}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </SpotlightCard>
-            </div>
-          ))}
+        {/* Structured Grid */}
+        <div className="mt-14 grid gap-8 lg:grid-cols-2">
+          {displayedCategories.map((category, index) => {
+            const Icon = CATEGORY_ICONS[category.id] || Sparkles
+
+            return (
+              <motion.div
+                key={category.id}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.5, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <SpotlightCard
+                  spotlightColor="rgba(139, 92, 246, 0.2)"
+                  borderColor="rgba(139, 92, 246, 0.45)"
+                  className="group p-6 md:p-8 h-full flex flex-col justify-between"
+                >
+                  <div>
+                    {/* Category Header */}
+                    <div className="flex items-center justify-between border-b border-edge/60 pb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="grid size-9 place-items-center rounded-lg bg-accent/15 text-accent transition-colors duration-200 group-hover:bg-signal/15 group-hover:text-signal">
+                          <Icon className="size-5 transition-colors duration-200 group-hover:text-signal" />
+                        </div>
+                        <div>
+                          <h3 className="font-display text-xl font-semibold text-ink">
+                            {category.title}
+                          </h3>
+                        </div>
+                      </div>
+                      <span className="rounded-full border border-edge bg-surface px-2.5 py-0.5 font-mono text-[10px] text-signal font-medium">
+                        {category.badge}
+                      </span>
+                    </div>
+
+                    <p className="mt-4 text-xs font-mono text-muted leading-relaxed">
+                      {category.description}
+                    </p>
+
+                    {/* Subgroups */}
+                    <div className="mt-6 space-y-6">
+                      {category.subgroups.map((group) => (
+                        <div key={group.name}>
+                          <h4 className="font-mono text-xs text-ink/70 uppercase tracking-wider mb-2.5">
+                            {group.name}
+                          </h4>
+                          <ul className="flex flex-wrap gap-2">
+                            {group.skills.map((skill) => (
+                              <motion.li
+                                key={skill.name}
+                                whileHover={{ scale: 1.05, y: -2 }}
+                                whileTap={{ scale: 0.95 }}
+                                transition={{ type: 'spring', stiffness: 450, damping: 22 }}
+                                className={`cursor-default flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-mono text-xs transition-colors duration-150 ${
+                                  skill.emphasis
+                                    ? 'border-accent/40 bg-accent/15 text-ink font-medium shadow-[0_0_12px_-4px_rgba(139,92,246,0.35)]'
+                                    : 'border-edge bg-surface/70 text-muted hover:border-edge/90 hover:text-ink'
+                                }`}
+                              >
+                                {skill.emphasis ? (
+                                  <span className="size-1.5 rounded-full bg-signal shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
+                                ) : null}
+                                <span>{skill.name}</span>
+                              </motion.li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </SpotlightCard>
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>

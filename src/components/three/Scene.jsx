@@ -2,6 +2,7 @@ import { Canvas } from '@react-three/fiber'
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { gsap, ScrollTrigger } from '../../lib/gsapConfig'
+import { useTheme } from '../../context/ThemeContext'
 import CenterpieceObject from './CenterpieceObject'
 import Particles from './Particles'
 import SceneLighting from './SceneLighting'
@@ -14,18 +15,10 @@ function pointBudget() {
   return 3400
 }
 
-/**
- * One canvas for the whole page, fixed behind the content.
- *
- * The canvas itself takes no pointer events — the sections are stacked above it
- * and would swallow every click before it reached the object. Instead R3F
- * listens on the app root and raycasts from client coordinates, so the object
- * stays clickable through whatever DOM happens to be in front of it while links
- * and buttons keep behaving normally.
- */
 export default function Scene({ initials = 'AN' }) {
   const wrapper = useRef(null)
   const reducedMotion = useReducedMotion()
+  const { theme } = useTheme()
   const [budget] = useState(pointBudget)
   const eventSource = useMemo(() => document.getElementById('root'), [])
 
@@ -48,20 +41,18 @@ export default function Scene({ initials = 'AN' }) {
     }
   }, [reducedMotion])
 
+  const bgColor = theme === 'light' ? '#f6f7fb' : '#0a0a0f'
+
   return (
     <div ref={wrapper} className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
       <Canvas
         dpr={[1, 1.8]}
-        // Opaque, not transparent. The particle field and the object's halo are
-        // additively blended, and additive draws almost no alpha — on a
-        // transparent canvas the browser composites that away to nothing. The
-        // clear colour matches the page background, so nothing else changes.
         gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
         camera={{ position: [0, 0, 6], fov: 45, near: 0.1, far: 100 }}
         eventSource={eventSource ?? undefined}
         eventPrefix="client"
       >
-        <color attach="background" args={['#0a0a0f']} />
+        <color attach="background" args={[bgColor]} />
         <SceneLighting />
         <Suspense fallback={null}>
           <Particles />

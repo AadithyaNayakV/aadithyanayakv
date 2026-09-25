@@ -283,7 +283,7 @@ export default function ProjectCard({ project }) {
             ) : (
               /* Show the first highlight by default as a preview */
               <div className="mt-2 flex items-start gap-2 text-xs text-ink/75 leading-relaxed">
-                <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-signal/80" />
+                <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-signal/80 transition-colors duration-200 group-hover:text-accent" />
                 <span>{project.highlights[0]}</span>
               </div>
             )}
@@ -312,7 +312,7 @@ export default function ProjectCard({ project }) {
               className="group/link flex items-center gap-1.5 text-sm font-medium text-signal hover:underline"
             >
               <span>Live System</span>
-              <ArrowUpRight className="size-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+              <ArrowUpRight className="size-4 text-signal transition-all duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 group-hover/link:text-accent" />
             </a>
           ) : (
             <span className="font-mono text-xs text-muted/60">Source Verified</span>
@@ -325,7 +325,7 @@ export default function ProjectCard({ project }) {
               rel="noreferrer noopener"
               className="group/repo flex items-center gap-1.5 text-sm text-ink/80 transition-colors hover:text-ink"
             >
-              <GitBranch className="size-4 text-accent transition-transform group-hover/repo:-translate-y-0.5" />
+              <GitBranch className="size-4 text-accent transition-all duration-200 group-hover/repo:-translate-y-0.5 group-hover/repo:text-signal" />
               <span>Repository</span>
             </a>
           ) : null}

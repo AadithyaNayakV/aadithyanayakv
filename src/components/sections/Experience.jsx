@@ -1,152 +1,208 @@
-import { useLayoutEffect, useRef } from 'react'
-import { experience } from '../../data/experience'
-import { EASE, gsap } from '../../lib/gsapConfig'
-import { motionState } from '../../lib/motionState'
+import { motion } from 'framer-motion'
+import { Briefcase, Calendar, CheckCircle2, ChevronRight, MapPin, Sparkles } from 'lucide-react'
+import { useState } from 'react'
+import { experiences } from '../../data/experience'
 import SectionHeading from '../ui/SectionHeading'
 import SpotlightCard from '../ui/SpotlightCard'
 
-/**
- * Experience Section: Full-width scrubbed timeline track with interactive 3D spotlight cards.
- */
 export default function Experience() {
-  const scope = useRef(null)
-  const line = useRef(null)
+  const [activeTab, setActiveTab] = useState('all') // 'all' | 'datavex' | 'current'
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const q = gsap.utils.selector(scope)
-      const entries = q('[data-entry]')
-
-      if (motionState.reducedMotion) {
-        gsap.set(line.current, { scaleY: 1 })
-        gsap.set(q('[data-entry-content]'), { opacity: 1, y: 0 })
-        gsap.set(q('[data-entry-node]'), { opacity: 1, scale: 1 })
-        return
-      }
-
-      gsap.fromTo(
-        line.current,
-        { scaleY: 0 },
-        {
-          scaleY: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: scope.current,
-            start: 'top 70%',
-            end: 'bottom 85%',
-            scrub: true,
-          },
-        },
-      )
-
-      entries.forEach((entry) => {
-        const trigger = { trigger: entry, start: 'top 75%' }
-
-        gsap.fromTo(
-          entry.querySelector('[data-entry-content]'),
-          { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, duration: 0.65, ease: EASE.swift, scrollTrigger: trigger },
-        )
-
-        gsap.fromTo(
-          entry.querySelector('[data-entry-node]'),
-          { opacity: 0.25, scale: 0.3 },
-          { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.4)', scrollTrigger: trigger },
-        )
-      })
-    }, scope)
-
-    return () => ctx.revert()
-  }, [])
+  const filteredExperiences = experiences.filter((exp) => {
+    if (activeTab === 'all') return true
+    if (activeTab === 'datavex') return exp.id === 'datavex'
+    if (activeTab === 'current') return exp.id === 'next-role'
+    return true
+  })
 
   return (
-    <section id="experience" ref={scope} className="relative z-10 py-28 md:py-36">
+    <section id="experience" className="relative z-10 py-28 md:py-36">
       <div className="shell">
-        <SectionHeading
-          index="04"
-          title="Experience & Education"
-          lede="Software engineering in industry and academic foundation."
-        />
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <SectionHeading
+            index="02"
+            title="Work Experience"
+            lede="Industry engineering background, enterprise frontend architectures, and applied AI systems."
+          />
+
+          {/* Filter Pills */}
+          <div className="flex items-center gap-1.5 rounded-full border border-edge bg-surface/80 p-1 backdrop-blur-md self-start md:self-auto">
+            {[
+              { id: 'all', label: 'All Timeline' },
+              { id: 'datavex', label: 'Datavex.ai (Concluded)' },
+              { id: 'current', label: 'Current Status' },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setActiveTab(tab.id)}
+                className={`relative rounded-full px-3.5 py-1.5 font-mono text-xs transition-colors ${
+                  activeTab === tab.id
+                    ? 'text-ink font-semibold'
+                    : 'text-muted hover:text-ink'
+                }`}
+              >
+                {activeTab === tab.id ? (
+                  <motion.span
+                    layoutId="exp-filter-pill"
+                    className="absolute inset-0 rounded-full bg-accent/20 border border-accent/40"
+                    transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                  />
+                ) : null}
+                <span className="relative z-10">{tab.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
 
         <div className="relative mt-14">
-          {/* Timeline continuous vertical track */}
-          <div className="absolute inset-y-0 left-3 md:left-4 w-px bg-edge" aria-hidden="true" />
+          {/* Continuous vertical track */}
           <div
-            ref={line}
-            className="glow-signal absolute inset-y-0 left-3 md:left-4 w-px origin-top bg-signal"
-            style={{ transform: 'scaleY(0)' }}
+            className="absolute inset-y-0 left-3 md:left-6 w-px bg-edge"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute inset-y-0 left-3 md:left-6 w-px origin-top bg-linear-to-b from-signal via-accent to-transparent"
             aria-hidden="true"
           />
 
-          <ol className="space-y-10 pl-9 md:pl-12">
-            {experience.map((entry) => (
-              <li key={entry.id} data-entry className="relative">
-                {/* Node beacon on track */}
-                <span
-                  data-entry-node
-                  aria-hidden="true"
-                  className={`absolute top-6 -left-9 md:-left-12 size-3.5 -translate-x-1/2 rounded-full border-2 ${
-                    entry.current
-                      ? 'border-signal bg-void shadow-[0_0_14px_rgba(34,211,238,0.9)]'
-                      : 'border-accent bg-void shadow-[0_0_10px_rgba(139,92,246,0.7)]'
-                  }`}
-                />
+          <div className="space-y-12 pl-8 md:pl-16">
+            {filteredExperiences.map((entry, index) => {
+              const isCurrent = entry.current
 
-                <div data-entry-content>
+              return (
+                <motion.div
+                  key={entry.id}
+                  initial={{ opacity: 0, y: 28 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.55, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="relative"
+                >
+                  {/* Node beacon on track */}
+                  <div
+                    aria-hidden="true"
+                    className={`absolute top-6 -left-8 md:-left-16 size-4 -translate-x-1/2 rounded-full border-2 transition-all ${
+                      isCurrent
+                        ? 'border-signal bg-void shadow-[0_0_14px_rgba(34,211,238,0.9)]'
+                        : 'border-accent bg-void shadow-[0_0_12px_rgba(139,92,246,0.7)]'
+                    }`}
+                  >
+                    <span
+                      className={`absolute inset-0.5 rounded-full ${
+                        isCurrent ? 'bg-signal animate-ping opacity-60' : 'bg-accent'
+                      }`}
+                    />
+                  </div>
+
                   <SpotlightCard
                     spotlightColor={
-                      entry.current ? 'rgba(34, 211, 238, 0.2)' : 'rgba(139, 92, 246, 0.18)'
+                      isCurrent
+                        ? 'rgba(34, 211, 238, 0.18)'
+                        : 'rgba(139, 92, 246, 0.2)'
                     }
                     borderColor={
-                      entry.current ? 'rgba(34, 211, 238, 0.5)' : 'rgba(139, 92, 246, 0.4)'
+                      isCurrent
+                        ? 'rgba(34, 211, 238, 0.5)'
+                        : 'rgba(139, 92, 246, 0.45)'
                     }
-                    className="p-6 md:p-8"
+                    className="group p-6 md:p-8"
                   >
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs text-signal font-medium">
-                          {entry.start} — {entry.end}
-                        </span>
-                        {entry.current ? (
-                          <span className="rounded-full bg-signal/20 px-2 py-0.5 font-mono text-[10px] text-signal border border-signal/30">
-                            Active
+                    {/* Header meta */}
+                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-edge/60 pb-5">
+                      <div className="flex flex-wrap items-center gap-2.5">
+                        <span className="flex items-center gap-1.5 font-mono text-xs font-semibold text-signal">
+                          <Calendar className="size-3.5 text-signal transition-colors duration-200 group-hover:text-accent" />
+                          <span>
+                            {entry.start} — {entry.end}
                           </span>
-                        ) : null}
+                        </span>
+
+                        <span
+                          className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 font-mono text-[11px] font-medium border ${
+                            isCurrent
+                              ? 'border-signal/40 bg-signal/15 text-signal'
+                              : 'border-edge bg-surface text-muted'
+                          }`}
+                        >
+                          {isCurrent ? (
+                            <span className="size-1.5 rounded-full bg-signal animate-pulse" />
+                          ) : (
+                            <CheckCircle2 className="size-3 text-accent transition-colors duration-200 group-hover:text-signal" />
+                          )}
+                          <span>{entry.statusBadge}</span>
+                        </span>
                       </div>
-                      <span className="font-mono text-xs text-muted">{entry.location}</span>
+
+                      <div className="flex items-center gap-1.5 font-mono text-xs text-muted">
+                        <MapPin className="size-3.5 text-muted transition-colors duration-200 group-hover:text-signal" />
+                        <span>{entry.location}</span>
+                      </div>
                     </div>
 
-                    <h3 className="mt-3 font-display text-2xl font-semibold text-ink">
-                      {entry.role}
-                    </h3>
-                    <p className="mt-1 text-base font-medium text-accent">{entry.org}</p>
+                    {/* Role & Company */}
+                    <div className="mt-5">
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <h3 className="font-display text-2xl md:text-3xl font-semibold text-ink tracking-tight transition-colors duration-200 group-hover:text-ink">
+                            {entry.role}
+                          </h3>
+                          <p className="mt-1 flex items-center gap-2 text-base md:text-lg font-medium text-accent transition-colors duration-200 group-hover:text-signal">
+                            <Briefcase className="size-4 text-accent transition-colors duration-200 group-hover:text-signal" />
+                            <span>{entry.org}</span>
+                          </p>
+                        </div>
+                      </div>
 
-                    <p className="mt-4 text-sm text-ink/85 leading-relaxed">
-                      {entry.summary}
-                    </p>
+                      <p className="mt-4 text-sm md:text-base leading-relaxed text-ink/85">
+                        {entry.summary}
+                      </p>
+                    </div>
 
+                    {/* Detailed bullet achievements */}
+                    {entry.achievements?.length ? (
+                      <div className="mt-6 space-y-3">
+                        <h4 className="font-mono text-xs uppercase tracking-wider text-muted font-medium flex items-center gap-1.5">
+                          <Sparkles className="size-3.5 text-accent transition-colors duration-200 group-hover:text-signal" />
+                          <span>Key Architecture & Responsibilities</span>
+                        </h4>
+                        <ul className="space-y-2.5">
+                          {entry.achievements.map((item, i) => (
+                            <li
+                              key={i}
+                              className="flex items-start gap-2.5 text-sm leading-relaxed text-ink/85"
+                            >
+                              <ChevronRight className="size-4 text-signal shrink-0 mt-0.5 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-accent" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
+
+                    {/* Tech tags */}
                     {entry.tech?.length ? (
-                      <div className="mt-5 border-t border-edge/60 pt-4">
-                        <span className="font-mono text-xs text-muted block mb-2">
-                          Technologies & Domains:
+                      <div className="mt-7 border-t border-edge/60 pt-5">
+                        <span className="mb-2.5 block font-mono text-xs text-muted">
+                          Applied Technologies & Environments:
                         </span>
                         <ul className="flex flex-wrap gap-2">
-                          {entry.tech.map((tech) => (
+                          {entry.tech.map((t) => (
                             <li
-                              key={tech}
-                              className="rounded-md border border-edge bg-surface/80 px-2.5 py-1 font-mono text-xs text-muted"
+                              key={t}
+                              className="rounded-md border border-edge bg-surface/80 px-2.5 py-1 font-mono text-xs text-ink/80 transition-colors hover:border-accent/50 hover:text-ink"
                             >
-                              {tech}
+                              {t}
                             </li>
                           ))}
                         </ul>
                       </div>
                     ) : null}
                   </SpotlightCard>
-                </div>
-              </li>
-            ))}
-          </ol>
+                </motion.div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>

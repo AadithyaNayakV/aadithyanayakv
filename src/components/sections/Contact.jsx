@@ -51,7 +51,11 @@ export default function Contact() {
   return (
     <section id="contact" ref={scope} className="relative z-10 py-28 md:py-36">
       <div className="shell">
-        <SectionHeading index="05" title="Get In Touch" />
+        <SectionHeading
+          index="08"
+          title="Get In Touch"
+          lede="Let's build reliable software systems, intelligent agent architectures, and responsive products together."
+        />
 
         <div data-contact-block className="mt-14">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
@@ -75,7 +79,7 @@ export default function Contact() {
                   </>
                 ) : (
                   <>
-                    <Copy className="size-4 text-muted group-hover:text-ink transition-colors" />
+                    <Copy className="size-4 text-muted group-hover:text-signal transition-colors duration-200" />
                     <span>Copy Email</span>
                   </>
                 )}
