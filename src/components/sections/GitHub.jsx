@@ -45,18 +45,6 @@ export default function GitHub() {
           />
         </div>
 
-        {/* Punchline Banner */}
-        <div className="mt-8 rounded-2xl border border-edge bg-surface/60 p-6 backdrop-blur-md">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <p className="font-display text-lg md:text-xl font-medium text-ink">
-              "Engineering software with algorithmic precision — from distributed backend event streams to offline edge intelligence."
-            </p>
-            <span className="font-mono text-xs text-signal font-semibold tracking-wider shrink-0 uppercase">
-              Production Tested • Open Source
-            </span>
-          </div>
-        </div>
-
         {/* Profile Overview Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

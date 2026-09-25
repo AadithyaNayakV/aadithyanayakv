@@ -2,17 +2,18 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 /**
- * High-Tech "Door / Curtain" Intro Reveal
- * Features dual sliding blast doors with cybernetic seam line and monogram reveal.
+ * Creative "Torn Paper" Intro Reveal
+ * Features two halves of fine deckled paper tearing apart down the center seam
+ * in a clean white paper aesthetic, with zero dark reload artifacts.
  */
 export default function IntroDoorLoader() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Elegant quick 1.1s initial boot sequence
+    // Quick, elegant 0.95s paper tear intro
     const timer = setTimeout(() => {
       setLoading(false)
-    }, 1100)
+    }, 950)
     return () => clearTimeout(timer)
   }, [])
 
@@ -20,48 +21,69 @@ export default function IntroDoorLoader() {
     <AnimatePresence>
       {loading ? (
         <motion.div
-          key="intro-doors"
-          className="fixed inset-0 z-[100] flex pointer-events-auto select-none overflow-hidden"
-          exit={{ opacity: 0, transition: { duration: 0.2, delay: 0.6 } }}
+          key="intro-paper"
+          className="fixed inset-0 z-[100] flex pointer-events-auto select-none overflow-hidden bg-transparent"
+          exit={{ opacity: 0, transition: { duration: 0.25, delay: 0.55 } }}
         >
-          {/* Left Door */}
+          {/* Left Torn Paper Half */}
           <motion.div
             initial={{ x: 0 }}
-            exit={{ x: '-100%' }}
-            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
-            className="relative h-full w-1/2 bg-[#09090f] border-r border-accent/30 flex items-center justify-end pr-4"
+            exit={{ x: '-105%' }}
+            transition={{ duration: 0.75, ease: [0.76, 0, 0.24, 1], delay: 0.08 }}
+            className="relative h-full w-[52%] bg-[#ffffff] shadow-[8px_0_24px_rgba(0,0,0,0.06)] flex items-center justify-end"
           >
-            {/* Tech grid texture */}
-            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#8b5cf6_1px,transparent_1px)] [background-size:16px_16px]" />
+            {/* Subtle paper grain texture */}
+            <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#0f172a_1px,transparent_1px)] [background-size:12px_12px]" />
+
+            {/* Jagged Ripped Paper Right Edge SVG */}
+            <svg
+              className="absolute -right-5 inset-y-0 h-full w-6 text-[#ffffff] fill-current drop-shadow-[4px_0_8px_rgba(0,0,0,0.04)] pointer-events-none"
+              preserveAspectRatio="none"
+              viewBox="0 0 20 1000"
+            >
+              <path d="M0,0 L12,30 L6,70 L16,120 L8,170 L14,220 L5,270 L15,330 L7,380 L14,430 L4,490 L16,540 L8,590 L15,640 L6,700 L14,750 L5,810 L15,860 L7,920 L13,970 L0,1000 Z" />
+            </svg>
           </motion.div>
 
-          {/* Right Door */}
+          {/* Right Torn Paper Half */}
           <motion.div
             initial={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
-            className="relative h-full w-1/2 bg-[#09090f] border-l border-signal/30 flex items-center justify-start pl-4"
+            exit={{ x: '105%' }}
+            transition={{ duration: 0.75, ease: [0.76, 0, 0.24, 1], delay: 0.08 }}
+            className="relative h-full w-[52%] -ml-[4%] bg-[#ffffff] shadow-[-8px_0_24px_rgba(0,0,0,0.06)] flex items-center justify-start"
           >
-            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#22d3ee_1px,transparent_1px)] [background-size:16px_16px]" />
+            <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#0f172a_1px,transparent_1px)] [background-size:12px_12px]" />
+
+            {/* Jagged Ripped Paper Left Edge SVG */}
+            <svg
+              className="absolute -left-5 inset-y-0 h-full w-6 text-[#ffffff] fill-current drop-shadow-[-4px_0_8px_rgba(0,0,0,0.04)] pointer-events-none"
+              preserveAspectRatio="none"
+              viewBox="0 0 20 1000"
+            >
+              <path d="M20,0 L8,30 L14,70 L4,120 L12,170 L6,220 L15,270 L5,330 L13,380 L6,430 L16,490 L4,540 L12,590 L5,640 L14,700 L6,750 L15,810 L5,860 L13,920 L7,970 L20,1000 Z" />
+            </svg>
           </motion.div>
 
-          {/* Center Monogram & Status Lock */}
+          {/* Center Embossed Seal & Monogram */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.1, transition: { duration: 0.25 } }}
-            className="absolute inset-0 m-auto flex flex-col items-center justify-center pointer-events-none"
+            exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
+            className="absolute inset-0 m-auto flex flex-col items-center justify-center pointer-events-none z-10"
           >
-            <div className="relative flex items-center justify-center size-20 rounded-2xl bg-surface/90 border border-edge shadow-[0_0_50px_rgba(34,211,238,0.3)] backdrop-blur-xl">
-              <span className="font-mono text-2xl font-bold tracking-widest text-ink">
+            <div className="relative flex flex-col items-center justify-center size-24 rounded-full bg-white border border-slate-200/80 shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+              <span className="font-mono text-2xl font-bold tracking-widest text-slate-900">
                 ANV
               </span>
-              <span className="absolute -bottom-1 size-2 rounded-full bg-signal animate-ping" />
+              <span className="mt-0.5 font-mono text-[9px] uppercase tracking-widest text-slate-500 font-medium">
+                Portfolio
+              </span>
+              <span className="absolute -bottom-1 size-1.5 rounded-full bg-sky-500 animate-ping" />
             </div>
 
-            <div className="mt-4 flex items-center gap-2 font-mono text-xs tracking-wider text-muted uppercase">
-              <span className="size-1.5 rounded-full bg-accent animate-pulse" />
-              <span>Initializing System...</span>
+            <div className="mt-4 flex items-center gap-2 font-mono text-xs tracking-wider text-slate-600 uppercase font-medium bg-white/90 px-3 py-1 rounded-full border border-slate-200/60 shadow-2xs">
+              <span className="size-1.5 rounded-full bg-indigo-500 animate-pulse" />
+              <span>Full-Stack & AI Engineer</span>
             </div>
           </motion.div>
         </motion.div>
