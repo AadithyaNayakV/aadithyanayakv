@@ -11,10 +11,12 @@ import Hero from './components/sections/Hero'
 import LeetCode from './components/sections/LeetCode'
 import Projects from './components/sections/Projects'
 import Skills from './components/sections/Skills'
+import CircuitBackground from './components/ui/CircuitBackground'
 import CustomCursor from './components/ui/CustomCursor'
+import IntroDoorLoader from './components/ui/IntroDoorLoader'
 import ScrollProgress from './components/ui/ScrollProgress'
+import SectionPortalDivider from './components/ui/SectionPortalDivider'
 import { ThemeProvider } from './context/ThemeContext'
-import { site } from './data/site'
 import { useScrollProgressDriver } from './hooks/useScrollProgress'
 import { ScrollTrigger } from './lib/gsapConfig'
 import { initPointerTracking } from './lib/motionState'
@@ -44,6 +46,8 @@ export default function App() {
   return (
     <ThemeProvider>
       <SmoothScroll>
+        <IntroDoorLoader />
+        <CircuitBackground />
         <ScrollProgress />
 
         <a
@@ -54,7 +58,7 @@ export default function App() {
         </a>
 
         <Suspense fallback={null}>
-          <Scene initials={site.initials} />
+          <Scene />
         </Suspense>
 
         <CustomCursor />
@@ -62,13 +66,21 @@ export default function App() {
 
         <main className="relative z-10">
           <Hero />
+          <SectionPortalDivider />
           <About />
+          <SectionPortalDivider />
           <Experience />
+          <SectionPortalDivider />
           <Education />
+          <SectionPortalDivider />
           <Projects />
+          <SectionPortalDivider />
           <Skills />
+          <SectionPortalDivider />
           <GitHub />
+          <SectionPortalDivider />
           <LeetCode />
+          <SectionPortalDivider />
           <Contact />
         </main>
 
