@@ -107,40 +107,13 @@ export default function Nav() {
                 e.preventDefault()
                 scrollToSection('hero')
               }}
-              className="font-display text-sm font-medium tracking-tight text-ink transition-opacity hover:opacity-75 flex items-center gap-2"
+              aria-label="Back to top"
+              className="font-mono text-xs font-semibold tracking-widest text-accent transition-colors hover:text-signal"
             >
-              <span>{site.name}</span>
+              ANV
             </a>
           </div>
 
-          {/* Desktop Quick Nav Pill */}
-          <nav
-            aria-label="Desktop navigation"
-            className="hidden lg:flex items-center gap-1 rounded-full border border-edge bg-surface/80 p-1.5 backdrop-blur-xl shadow-xs"
-          >
-            {navItems.map(({ id, label }) => {
-              const isActive = active === id
-              return (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => scrollToSection(id)}
-                  className={`relative rounded-full px-3 py-1 font-mono text-xs transition-colors ${
-                    isActive ? 'text-ink font-medium' : 'text-muted hover:text-ink'
-                  }`}
-                >
-                  {isActive ? (
-                    <motion.span
-                      layoutId="desktop-nav-pill"
-                      className="absolute inset-0 rounded-full bg-accent/20 border border-accent/40"
-                      transition={{ type: 'spring', stiffness: 350, damping: 28 }}
-                    />
-                  ) : null}
-                  <span className="relative z-10">{label}</span>
-                </button>
-              )
-            })}
-          </nav>
 
           <div className="flex items-center gap-2.5">
             {/* Quick Resume Download */}

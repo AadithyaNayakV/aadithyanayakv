@@ -18,41 +18,35 @@ export default function Experience() {
   return (
     <section id="experience" className="relative z-10 py-28 md:py-36">
       <div className="shell">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-          <SectionHeading
-            index="02"
-            title="Work Experience"
-            lede="Industry engineering background, enterprise frontend architectures, and applied AI systems."
-          />
+        <SectionHeading
+          index="02"
+          title="Work Experience"
+          lede="Industry engineering background, enterprise frontend architectures, and applied AI systems."
+        />
 
-          {/* Filter Pills */}
-          <div className="flex items-center gap-1.5 rounded-full border border-edge bg-surface/80 p-1 backdrop-blur-md self-start md:self-auto">
-            {[
-              { id: 'all', label: 'All Timeline' },
-              { id: 'datavex', label: 'Datavex.ai (Concluded)' },
-              { id: 'current', label: 'Current Status' },
-            ].map((tab) => (
+        {/* Filter Chips */}
+        <div className="mt-8 flex flex-wrap items-center gap-2">
+          {[
+            { id: 'all', label: 'All Timeline' },
+            { id: 'datavex', label: 'Datavex.ai (Concluded)' },
+            { id: 'current', label: 'Current Status' },
+          ].map((tab) => {
+            const isActive = activeTab === tab.id
+            return (
               <button
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative rounded-full px-3.5 py-1.5 font-mono text-xs transition-colors ${
-                  activeTab === tab.id
-                    ? 'text-ink font-semibold'
-                    : 'text-muted hover:text-ink'
+                className={`rounded-xl border px-4 py-2 font-mono text-xs transition-all duration-200 ${
+                  isActive
+                    ? 'border-accent bg-accent/15 text-accent font-semibold shadow-xs'
+                    : 'border-edge bg-surface/80 text-muted hover:border-accent/40 hover:text-ink'
                 }`}
               >
-                {activeTab === tab.id ? (
-                  <motion.span
-                    layoutId="exp-filter-pill"
-                    className="absolute inset-0 rounded-full bg-accent/20 border border-accent/40"
-                    transition={{ type: 'spring', stiffness: 350, damping: 28 }}
-                  />
-                ) : null}
-                <span className="relative z-10">{tab.label}</span>
+                {tab.label}
               </button>
-            ))}
-          </div>
+            )
+          })}
         </div>
 
         <div className="relative mt-14">

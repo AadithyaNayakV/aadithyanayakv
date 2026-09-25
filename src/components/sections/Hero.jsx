@@ -52,24 +52,23 @@ export default function Hero() {
       <div className="shell grid w-full items-center gap-10 md:grid-cols-12">
         {/* Left Side: Identity, Positioning & Quick CTAs */}
         <div className="md:col-span-8 lg:col-span-7">
-          <div
-            data-hero-line
-            className="inline-flex items-center gap-2 rounded-full border border-edge bg-surface/80 px-3.5 py-1 text-xs text-muted backdrop-blur-md"
-          >
-            <span className="size-2 rounded-full bg-signal animate-pulse" />
-            <span className="font-mono text-ink/90">Full-Stack & AI Engineer • Ex-Datavex.ai</span>
-          </div>
-
           <h1
             data-hero-line
-            className="mt-6 text-5xl leading-[1.03] font-semibold tracking-tight text-ink md:text-6xl lg:text-7xl"
+            className="text-5xl leading-[1.03] font-semibold tracking-tight text-ink md:text-6xl lg:text-7xl mt-16"
           >
             {site.name}
           </h1>
 
           <p
             data-hero-line
-            className="measure mt-6 text-lg leading-relaxed text-ink/85 md:text-xl"
+            className="measure mt-4 text-xl md:text-2xl font-semibold tracking-tight text-signal"
+          >
+            Engineering systems that think, scale, and deliver.
+          </p>
+
+          <p
+            data-hero-line
+            className="measure mt-3.5 text-base md:text-lg leading-relaxed text-ink/85"
           >
             {site.positioning}
           </p>

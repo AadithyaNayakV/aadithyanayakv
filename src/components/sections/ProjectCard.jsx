@@ -303,32 +303,33 @@ export default function ProjectCard({ project }) {
         </ul>
 
         {/* Actions */}
-        <div className="mt-6 flex items-center gap-5 border-t border-edge/80 pt-4">
-          {project.live ? (
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="group/link flex items-center gap-1.5 text-sm font-medium text-signal hover:underline"
-            >
-              <span>Live System</span>
-              <ArrowUpRight className="size-4 text-signal transition-all duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 group-hover/link:text-accent" />
-            </a>
-          ) : (
-            <span className="font-mono text-xs text-muted/60">Source Verified</span>
-          )}
-
+        <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-edge/80 pt-4">
           {project.repo ? (
             <a
               href={project.repo}
               target="_blank"
               rel="noreferrer noopener"
-              className="group/repo flex items-center gap-1.5 text-sm text-ink/80 transition-colors hover:text-ink"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-edge bg-surface/90 px-3.5 py-1.5 font-mono text-xs font-medium text-ink transition-all hover:border-accent hover:bg-accent/10 active:scale-95 shadow-xs"
             >
-              <GitBranch className="size-4 text-accent transition-all duration-200 group-hover/repo:-translate-y-0.5 group-hover/repo:text-signal" />
-              <span>Repository</span>
+              <GitBranch className="size-3.5 text-accent" />
+              <span>GitHub Repo</span>
+              <ArrowUpRight className="size-3 text-muted" />
             </a>
           ) : null}
+
+          {project.live ? (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-signal/40 bg-signal/10 px-3.5 py-1.5 font-mono text-xs font-medium text-signal transition-all hover:bg-signal/20 active:scale-95"
+            >
+              <span>Live Demo</span>
+              <ArrowUpRight className="size-3.5 text-signal" />
+            </a>
+          ) : (
+            <span className="font-mono text-xs text-muted/60 pl-1">Source Verified</span>
+          )}
         </div>
       </div>
     </motion.article>

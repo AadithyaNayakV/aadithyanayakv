@@ -78,10 +78,15 @@ const pointsFragment = /* glsl */ `
     float d = length(gl_PointCoord - 0.5);
     if (d > 0.5) discard;
 
-    float alpha = smoothstep(0.5, 0.08, d);
-    vec3 col = mix(uColorA, uColorB, smoothstep(0.0, 0.5, vMorph));
+    // Smooth Gaussian-like dreamy blur so it never feels harsh or distracting
+    float alpha = smoothstep(0.5, 0.02, d);
+    alpha = pow(alpha, 1.8);
 
-    gl_FragColor = vec4(col, alpha * uOpacity * (0.4 + vSeed * 0.6));
+    vec3 col = mix(uColorA, uColorB, smoothstep(0.0, 0.45, vMorph));
+
+    // Soft blur opacity in background so it won't disturb reading
+    float blurIntensity = mix(0.42, 0.85, vMorph);
+    gl_FragColor = vec4(col, alpha * uOpacity * blurIntensity * (0.35 + vSeed * 0.65));
   }
 `
 
@@ -105,11 +110,9 @@ const haloFragment = /* glsl */ `
   varying vec3 vView;
 
   void main() {
-    // Rim only. A wide, soft ball of light reads as a bloom filter left on by
-    // accident; a tight edge reads as the object having a presence.
     float f = 1.0 - abs(dot(normalize(vNormal), normalize(vView)));
     f = pow(f, 4.5);
-    gl_FragColor = vec4(uColor, f * uIntensity * 0.3);
+    gl_FragColor = vec4(uColor, f * uIntensity * 0.25);
   }
 `
 
@@ -138,11 +141,10 @@ function buildShell(count) {
 
 /**
  * Rasterises the initials to an offscreen canvas and samples the opaque pixels,
- * giving one 3D position per particle. Returns null if the text did not render
- * (which would otherwise collapse every particle to the origin).
+ * giving one 3D position per particle.
  */
 function sampleTextPoints(text, count) {
-  const W = 512
+  const W = 640
   const H = 256
 
   const canvas = document.createElement('canvas')
@@ -155,7 +157,7 @@ function sampleTextPoints(text, count) {
   ctx.fillStyle = '#000'
   ctx.fillRect(0, 0, W, H)
   ctx.fillStyle = '#fff'
-  ctx.font = '700 168px "Space Grotesk", ui-sans-serif, system-ui, sans-serif'
+  ctx.font = '700 148px "Space Grotesk", ui-sans-serif, system-ui, sans-serif'
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
   ctx.fillText(text, W / 2, H / 2)
@@ -177,7 +179,7 @@ function sampleTextPoints(text, count) {
     const x = hits[j * 2] + (Math.random() - 0.5) * 2
     const y = hits[j * 2 + 1] + (Math.random() - 0.5) * 2
 
-    out[i * 3] = (x / W - 0.5) * 3.0
+    out[i * 3] = (x / W - 0.5) * 3.4
     out[i * 3 + 1] = -(y / H - 0.5) * 1.5
     out[i * 3 + 2] = (Math.random() - 0.5) * 0.22
   }
@@ -188,15 +190,10 @@ function sampleTextPoints(text, count) {
 /* ------------------------------------------------------------ component */
 
 /**
- * The persistent 3D object.
- *
- * Its position, scale and opacity are one continuous function of overall page
- * progress — not per-section triggers — so scrubbing backwards retraces the
- * same path. Click or keyboard activation disperses the particles into the
- * initials and lets them fall back to whatever state the scroll dictates by
- * the time they land.
+ * The persistent 3D object:
+ * Now renders ANV with dreamy particle blur and automatic periodic pulse.
  */
-export default function CenterpieceObject({ initials = 'AN', pointCount = 3400 }) {
+export default function CenterpieceObject({ initials = 'ANV', pointCount = 3400 }) {
   const group = useRef()
   const shell = useRef()
   const core = useRef()
@@ -271,6 +268,16 @@ export default function CenterpieceObject({ initials = 'AN', pointCount = 3400 }
       .to(motionState, { morph: 0, duration: out * 1.4, ease: 'power2.inOut' }, `+=${hold}`)
   }, [])
 
+  // Auto-pulse morph every 13 seconds when idle so everyone sees ANV even without touching
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!morphTl.current && motionState.morph < 0.05) {
+        activate()
+      }
+    }, 13000)
+    return () => clearInterval(timer)
+  }, [activate])
+
   // Keyboard equivalent — the hero renders a focusable control that fires this.
   useEffect(() => {
     window.addEventListener('centerpiece:activate', activate)
@@ -307,9 +314,7 @@ export default function CenterpieceObject({ initials = 'AN', pointCount = 3400 }
 
     const heroScale = narrow ? 0.6 : Math.min(0.9, viewport.width / 9.5)
 
-    // Anchored to the right edge rather than to a fraction of the width, so the
-    // gap between the object and the text column does not close up as the
-    // window narrows — that gap is the only thing keeping the two apart.
+    // Anchored to the right edge rather than to a fraction of the width
     const heroX = narrow ? 0 : viewport.width / 2 - (SHELL_RADIUS * heroScale + 0.6)
     const heroY = narrow ? 1.32 : 0.12
 
@@ -325,15 +330,20 @@ export default function CenterpieceObject({ initials = 'AN', pointCount = 3400 }
     let dockT = 0
 
     if (!reduced) {
-      // Smoothly glides from hero to dock position
-      dockT = easeInOutCubic(progressBetween(motionState.scroll, 0.12, 0.28))
-      x = lerp(heroX, dockX, dockT)
-      y = lerp(heroY, dockY, dockT)
-      scale = lerp(heroScale, dockScale, dockT)
+      // Smoothly glides from hero to dock position and orbits across the page background
+      dockT = easeInOutCubic(progressBetween(motionState.scroll, 0.1, 0.28))
+
+      // Orbital gentle drift across the background as page scrolls so it rotates around different areas
+      const orbitX = Math.sin(motionState.scroll * Math.PI * 3) * (narrow ? 0.25 : 1.25)
+      const orbitY = Math.cos(motionState.scroll * Math.PI * 2.5) * (narrow ? 0.35 : 0.65)
+
+      x = lerp(heroX, dockX + orbitX, dockT)
+      y = lerp(heroY, dockY + orbitY, dockT)
+      scale = lerp(heroScale, dockScale * 1.15, dockT)
 
       // Near the bottom, gently ease opacity without disappearing
       const ending = progressBetween(motionState.scroll, 0.92, 1)
-      opacity = lerp(1, 0.55, ending)
+      opacity = lerp(1, 0.45, ending)
       scale *= lerp(1, 0.9, ending)
     }
 
@@ -348,7 +358,10 @@ export default function CenterpieceObject({ initials = 'AN', pointCount = 3400 }
     if (!reduced) {
       // Living idle spin + settling boost during dock transition
       const settleKick = Math.sin(dockT * Math.PI) * 1.8
-      g.rotation.y += dt * (0.28 + settleKick + (1 - intro) * 3.0) * (1 - morph)
+      g.rotation.y += dt * (0.32 + settleKick + (1 - intro) * 3.0) * (1 - morph)
+
+      // Ambient 3D tumbling so it rotates in full space
+      g.rotation.x += dt * 0.08 * (1 - morph)
 
       // When the initials are morphing, face forward
       if (morph > 0.01) {

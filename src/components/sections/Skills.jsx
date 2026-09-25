@@ -23,56 +23,51 @@ export default function Skills() {
   return (
     <section id="skills" className="relative z-10 py-28 md:py-36">
       <div className="shell">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-          <SectionHeading
-            index="05"
-            title="Technical Skills"
-            lede="Organized around Full-Stack Engineering, Applied AI Systems, and Distributed Infrastructure."
-          />
+        <SectionHeading
+          index="05"
+          title="Technical Skills"
+          lede="Organized around Full-Stack Engineering, Applied AI Systems, and Distributed Infrastructure."
+        />
 
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center gap-1.5 rounded-full border border-edge bg-surface/80 p-1 backdrop-blur-md self-start md:self-auto">
-            <button
-              type="button"
-              onClick={() => setSelectedCategory('all')}
-              className={`relative rounded-full px-3.5 py-1.5 font-mono text-xs transition-colors ${
-                selectedCategory === 'all'
-                  ? 'text-ink font-semibold'
-                  : 'text-muted hover:text-ink'
-              }`}
-            >
-              {selectedCategory === 'all' ? (
-                <motion.span
-                  layoutId="skills-pill"
-                  className="absolute inset-0 rounded-full bg-accent/20 border border-accent/40"
-                  transition={{ type: 'spring', stiffness: 350, damping: 28 }}
-                />
-              ) : null}
-              <span className="relative z-10">All Areas</span>
-            </button>
+        {/* Category Filter Chips */}
+        <div className="mt-8 flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setSelectedCategory('all')}
+            className={`rounded-xl border px-4 py-2 font-mono text-xs transition-all duration-200 ${
+              selectedCategory === 'all'
+                ? 'border-accent bg-accent/15 text-accent font-semibold shadow-xs'
+                : 'border-edge bg-surface/80 text-muted hover:border-accent/40 hover:text-ink'
+            }`}
+          >
+            All Areas
+          </button>
 
-            {skillCategories.map((cat) => (
+          {skillCategories.map((cat) => {
+            const labelMap = {
+              fullstack: 'Full-Stack',
+              'ai-engineering': 'AI Systems',
+              'data-storage': 'Databases',
+              'cloud-devops': 'Cloud & DevOps',
+            }
+            const displayLabel = labelMap[cat.id] || cat.title
+            const isActive = selectedCategory === cat.id
+
+            return (
               <button
                 key={cat.id}
                 type="button"
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`relative rounded-full px-3.5 py-1.5 font-mono text-xs transition-colors ${
-                  selectedCategory === cat.id
-                    ? 'text-ink font-semibold'
-                    : 'text-muted hover:text-ink'
+                className={`rounded-xl border px-4 py-2 font-mono text-xs transition-all duration-200 ${
+                  isActive
+                    ? 'border-accent bg-accent/15 text-accent font-semibold shadow-xs'
+                    : 'border-edge bg-surface/80 text-muted hover:border-accent/40 hover:text-ink'
                 }`}
               >
-                {selectedCategory === cat.id ? (
-                  <motion.span
-                    layoutId="skills-pill"
-                    className="absolute inset-0 rounded-full bg-accent/20 border border-accent/40"
-                    transition={{ type: 'spring', stiffness: 350, damping: 28 }}
-                  />
-                ) : null}
-                <span className="relative z-10">{cat.title.split(' ')[0]}</span>
+                {displayLabel}
               </button>
-            ))}
-          </div>
+            )
+          })}
         </div>
 
         {/* Structured Grid */}

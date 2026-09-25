@@ -28,21 +28,32 @@ const LANGUAGE_COLORS = {
 export default function GitHub() {
   const { github } = developerData
 
+  // Display only core project repositories
+  const projectRepoKeys = ['Startup-Foundary', 'FairPlace', 'Jarvis', 'FinanceBot', 'fairplace']
+  const projectRepos = (github.featuredRepos || []).filter((repo) =>
+    projectRepoKeys.some((key) => key.toLowerCase() === (repo.rawName || repo.name).toLowerCase()),
+  )
+
   return (
     <section id="github" className="relative z-10 py-28 md:py-36">
       <div className="shell">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <SectionHeading
             index="06"
-            title="GitHub Activity"
-            lede="Public code repositories and open-source systems automatically synced via GitHub Actions."
+            title="Project Repositories & GitHub"
+            lede="Open-source systems and production codebases built end to end."
           />
+        </div>
 
-          {/* Sync status badge */}
-          <div className="flex items-center gap-2 rounded-full border border-edge bg-surface/80 px-3.5 py-1.5 font-mono text-xs text-muted backdrop-blur-md self-start md:self-auto">
-            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Auto-synced via workflow</span>
-            <RefreshCw className="size-3 text-muted" />
+        {/* Punchline Banner */}
+        <div className="mt-8 rounded-2xl border border-edge bg-surface/60 p-6 backdrop-blur-md">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <p className="font-display text-lg md:text-xl font-medium text-ink">
+              "Engineering software with algorithmic precision — from distributed backend event streams to offline edge intelligence."
+            </p>
+            <span className="font-mono text-xs text-signal font-semibold tracking-wider shrink-0 uppercase">
+              Production Tested • Open Source
+            </span>
           </div>
         </div>
 
@@ -52,7 +63,7 @@ export default function GitHub() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-12"
+          className="mt-8"
         >
           <SpotlightCard
             spotlightColor="rgba(139, 92, 246, 0.16)"
@@ -112,7 +123,7 @@ export default function GitHub() {
                   className="group/btn inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-mono text-xs font-semibold text-white shadow-md shadow-accent/20 transition-all hover:bg-accent/90 hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <GithubIcon className="size-4 text-white transition-colors duration-200 group-hover/btn:text-signal" />
-                  <span>View Profile</span>
+                  <span>View GitHub</span>
                   <ExternalLink className="size-3.5 text-white/80 transition-all duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:text-signal" />
                 </a>
               </div>
@@ -120,9 +131,9 @@ export default function GitHub() {
           </SpotlightCard>
         </motion.div>
 
-        {/* Featured Repositories Grid */}
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {github.featuredRepos.map((repo, index) => {
+        {/* Project Repositories Grid */}
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+          {projectRepos.map((repo, index) => {
             const langColor = LANGUAGE_COLORS[repo.language] || '#8b5cf6'
 
             return (
@@ -144,7 +155,7 @@ export default function GitHub() {
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-2">
                         <GithubIcon className="size-4 text-signal shrink-0 transition-colors duration-200 group-hover:text-accent" />
-                        <h4 className="font-display text-base font-semibold text-ink tracking-tight line-clamp-1 transition-colors duration-200 group-hover:text-accent">
+                        <h4 className="font-display text-lg font-semibold text-ink tracking-tight transition-colors duration-200 group-hover:text-accent">
                           {repo.name}
                         </h4>
                       </div>
@@ -159,14 +170,28 @@ export default function GitHub() {
                       </a>
                     </div>
 
-                    <p className="mt-3 text-xs leading-relaxed text-ink/80 line-clamp-3">
+                    <p className="mt-3 text-sm leading-relaxed text-ink/80">
                       {repo.description}
                     </p>
+
+                    {/* Topics */}
+                    {repo.topics?.length ? (
+                      <div className="mt-4 flex flex-wrap gap-1.5">
+                        {repo.topics.map((t) => (
+                          <span
+                            key={t}
+                            className="rounded-md border border-edge/60 bg-surface/70 px-2 py-0.5 font-mono text-[11px] text-muted"
+                          >
+                            #{t}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
 
                   {/* Footer Meta */}
-                  <div className="mt-6 border-t border-edge/60 pt-4">
-                    <div className="flex items-center justify-between font-mono text-xs text-muted">
+                  <div className="mt-6 border-t border-edge/60 pt-4 flex items-center justify-between">
+                    <div className="flex items-center gap-3 font-mono text-xs text-muted">
                       {/* Language */}
                       <span className="flex items-center gap-1.5">
                         <span
@@ -177,24 +202,46 @@ export default function GitHub() {
                       </span>
 
                       {/* Stars & Forks */}
-                      <div className="flex items-center gap-3">
-                        {repo.stars > 0 ? (
-                          <span className="flex items-center gap-1">
-                            <Star className="size-3 text-amber-400 fill-amber-400/20 transition-transform duration-200 group-hover:scale-125" />
-                            <span>{repo.stars}</span>
-                          </span>
-                        ) : null}
+                      {repo.stars > 0 ? (
                         <span className="flex items-center gap-1">
-                          <GitFork className="size-3 text-muted transition-colors duration-200 group-hover:text-accent" />
-                          <span>{repo.forks}</span>
+                          <Star className="size-3 text-amber-400 fill-amber-400/20" />
+                          <span>{repo.stars}</span>
                         </span>
-                      </div>
+                      ) : null}
+                      <span className="flex items-center gap-1">
+                        <GitFork className="size-3 text-muted" />
+                        <span>{repo.forks}</span>
+                      </span>
                     </div>
+
+                    <a
+                      href={repo.url}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-signal hover:underline"
+                    >
+                      <span>Open Repo</span>
+                      <ExternalLink className="size-3 text-signal" />
+                    </a>
                   </div>
                 </SpotlightCard>
               </motion.div>
             )
           })}
+        </div>
+
+        {/* Explore All Repositories on GitHub CTA */}
+        <div className="mt-12 flex justify-center">
+          <a
+            href="https://github.com/AadithyaNayakV?tab=repositories"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="group inline-flex items-center gap-3 rounded-full border border-edge bg-surface/90 px-6 py-3.5 font-mono text-xs font-semibold text-ink shadow-md backdrop-blur-md transition-all hover:border-signal hover:bg-surface hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <GithubIcon className="size-4 text-signal transition-transform duration-200 group-hover:rotate-12" />
+            <span>Explore All 13+ Repositories on GitHub</span>
+            <ExternalLink className="size-3.5 text-muted transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-signal" />
+          </a>
         </div>
       </div>
     </section>

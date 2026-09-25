@@ -25,13 +25,6 @@ export default function LeetCode() {
             title="LeetCode Problem Solving"
             lede="Algorithmic problem solving, data structures, and continuous practice."
           />
-
-          {/* Sync badge */}
-          <div className="flex items-center gap-2 rounded-full border border-edge bg-surface/80 px-3.5 py-1.5 font-mono text-xs text-muted backdrop-blur-md self-start md:self-auto">
-            <span className="size-2 rounded-full bg-signal animate-pulse" />
-            <span>Auto-synced via workflow</span>
-            <RefreshCw className="size-3 text-muted" />
-          </div>
         </div>
 
         <div className="mt-14 grid gap-8 lg:grid-cols-12 items-stretch">

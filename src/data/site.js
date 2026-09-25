@@ -5,7 +5,7 @@
 
 export const site = {
   name: 'Aadithya Nayak V',
-  initials: 'AN', // drives the particle unfold in the hero centrepiece
+  initials: 'ANV', // drives the particle unfold in the hero centrepiece
   role: 'Full-Stack Developer & AI Engineer',
 
   positioning:

@@ -15,7 +15,7 @@ function pointBudget() {
   return 3400
 }
 
-export default function Scene({ initials = 'AN' }) {
+export default function Scene({ initials = 'ANV' }) {
   const wrapper = useRef(null)
   const reducedMotion = useReducedMotion()
   const { theme } = useTheme()
