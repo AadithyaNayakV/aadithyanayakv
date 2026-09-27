@@ -1,6 +1,7 @@
 import { ArrowUp } from 'lucide-react'
 import { site } from '../../data/site'
 import { scrollToSection } from '../../lib/lenis'
+import { GMAIL_COMPOSE_URL, handleEmailClick } from '../../utils/mail'
 
 export default function Footer() {
   return (
@@ -12,17 +13,23 @@ export default function Footer() {
 
         <div className="flex flex-wrap items-center gap-6">
           <div className="flex items-center gap-4">
-            {site.socials.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target={s.href.startsWith('mailto:') ? undefined : '_blank'}
-                rel={s.href.startsWith('mailto:') ? undefined : 'noreferrer noopener'}
-                className="font-mono text-xs text-muted transition-colors hover:text-signal"
-              >
-                {s.label}
-              </a>
-            ))}
+            {site.socials.map((s) => {
+              const isEmail = s.label === 'Email'
+              const href = isEmail ? GMAIL_COMPOSE_URL : s.href
+
+              return (
+                <a
+                  key={s.label}
+                  href={href}
+                  onClick={isEmail ? handleEmailClick : undefined}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="font-mono text-xs text-muted transition-colors hover:text-signal"
+                >
+                  {s.label}
+                </a>
+              )
+            })}
           </div>
 
           <button

@@ -7,6 +7,7 @@ import Button from '../ui/Button'
 import ResumeDownloadButton from '../ui/ResumeDownloadButton'
 import SectionHeading from '../ui/SectionHeading'
 import SpotlightCard from '../ui/SpotlightCard'
+import { GMAIL_COMPOSE_URL, handleEmailClick } from '../../utils/mail'
 
 /**
  * Contact Section: Interactive 4-column spotlight grid.
@@ -66,7 +67,10 @@ export default function Contact() {
             <div className="flex flex-wrap items-center gap-4">
               <Button
                 as="a"
-                href={`mailto:${site.contact.email}`}
+                href={GMAIL_COMPOSE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleEmailClick}
                 variant="primary"
                 icon={Mail}
               >
@@ -98,6 +102,7 @@ export default function Contact() {
             {site.socials.map((social) => {
               const isLeetcode = social.label === 'LeetCode'
               const isEmail = social.label === 'Email'
+              const cardHref = isEmail ? GMAIL_COMPOSE_URL : social.href
 
               return (
                 <li key={social.label} className="h-full">
@@ -117,9 +122,10 @@ export default function Contact() {
                     className="h-full"
                   >
                     <a
-                      href={social.href}
-                      target={social.href.startsWith('mailto:') ? undefined : '_blank'}
-                      rel={social.href.startsWith('mailto:') ? undefined : 'noreferrer noopener'}
+                      href={cardHref}
+                      onClick={isEmail ? handleEmailClick : undefined}
+                      target="_blank"
+                      rel="noreferrer noopener"
                       className="flex h-full flex-col justify-between p-6 cursor-pointer"
                     >
                       <div>

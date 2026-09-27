@@ -6,6 +6,7 @@ import { ScrollTrigger } from '../../lib/gsapConfig'
 import { getLenis, scrollToSection } from '../../lib/lenis'
 import ResumeDownloadButton from '../ui/ResumeDownloadButton'
 import ThemeToggle from '../ui/ThemeToggle'
+import { GMAIL_COMPOSE_URL, handleEmailClick } from '../../utils/mail'
 
 const overlay = {
   hidden: { opacity: 0, transition: { duration: 0.25, ease: [0.4, 0, 0.2, 1] } },
@@ -202,7 +203,10 @@ export default function Nav() {
                   <ThemeToggle showLabel />
                   <ResumeDownloadButton />
                   <a
-                    href={`mailto:${site.contact.email}`}
+                    href={GMAIL_COMPOSE_URL}
+                    onClick={handleEmailClick}
+                    target="_blank"
+                    rel="noreferrer noopener"
                     className="link-draw font-mono text-xs text-muted hover:text-ink"
                   >
                     {site.contact.email}
@@ -210,17 +214,23 @@ export default function Nav() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  {site.socials.map((s) => (
-                    <a
-                      key={s.label}
-                      href={s.href}
-                      target={s.href.startsWith('mailto:') ? undefined : '_blank'}
-                      rel={s.href.startsWith('mailto:') ? undefined : 'noreferrer noopener'}
-                      className="font-mono text-xs text-muted transition-colors hover:text-signal"
-                    >
-                      {s.label}
-                    </a>
-                  ))}
+                  {site.socials.map((s) => {
+                    const isEmail = s.label === 'Email'
+                    const href = isEmail ? GMAIL_COMPOSE_URL : s.href
+
+                    return (
+                      <a
+                        key={s.label}
+                        href={href}
+                        onClick={isEmail ? handleEmailClick : undefined}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="font-mono text-xs text-muted transition-colors hover:text-signal"
+                      >
+                        {s.label}
+                      </a>
+                    )
+                  })}
                 </div>
               </motion.div>
             </nav>
