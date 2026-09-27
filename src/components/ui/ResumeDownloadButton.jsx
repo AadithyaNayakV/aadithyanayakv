@@ -17,7 +17,7 @@ export default function ResumeDownloadButton({ variant = 'secondary', className 
       iconClass="group-hover:translate-y-0.5 group-focus-visible:translate-y-0.5"
       className={className}
     >
-      Download résumé
+      Download Resume
     </Button>
   )
 }

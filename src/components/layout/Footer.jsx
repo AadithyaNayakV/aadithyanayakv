@@ -17,7 +17,7 @@ export default function Footer() {
                 key={s.label}
                 href={s.href}
                 target={s.href.startsWith('mailto:') ? undefined : '_blank'}
-                rel="noreferrer noopener"
+                rel={s.href.startsWith('mailto:') ? undefined : 'noreferrer noopener'}
                 className="font-mono text-xs text-muted transition-colors hover:text-signal"
               >
                 {s.label}

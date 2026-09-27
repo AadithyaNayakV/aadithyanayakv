@@ -1,20 +1,10 @@
 import { motion } from 'framer-motion'
-import { Briefcase, Calendar, CheckCircle2, ChevronRight, MapPin, Sparkles } from 'lucide-react'
-import { useState } from 'react'
+import { Briefcase, Calendar, ChevronRight, MapPin, Sparkles } from 'lucide-react'
 import { experiences } from '../../data/experience'
 import SectionHeading from '../ui/SectionHeading'
 import SpotlightCard from '../ui/SpotlightCard'
 
 export default function Experience() {
-  const [activeTab, setActiveTab] = useState('all') // 'all' | 'datavex' | 'current'
-
-  const filteredExperiences = experiences.filter((exp) => {
-    if (activeTab === 'all') return true
-    if (activeTab === 'datavex') return exp.id === 'datavex'
-    if (activeTab === 'current') return exp.id === 'next-role'
-    return true
-  })
-
   return (
     <section id="experience" className="relative z-10 py-28 md:py-36">
       <div className="shell">
@@ -24,31 +14,6 @@ export default function Experience() {
           lede="Industry engineering background, enterprise frontend architectures, and applied AI systems."
         />
 
-        {/* Filter Chips */}
-        <div className="mt-8 flex flex-wrap items-center gap-2">
-          {[
-            { id: 'all', label: 'All Timeline' },
-            { id: 'datavex', label: 'Datavex.ai (Concluded)' },
-            { id: 'current', label: 'Current Status' },
-          ].map((tab) => {
-            const isActive = activeTab === tab.id
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setActiveTab(tab.id)}
-                className={`rounded-xl border px-4 py-2 font-mono text-xs transition-all duration-200 ${
-                  isActive
-                    ? 'border-accent bg-accent/15 text-accent font-semibold shadow-xs'
-                    : 'border-edge bg-surface/80 text-muted hover:border-accent/40 hover:text-ink'
-                }`}
-              >
-                {tab.label}
-              </button>
-            )
-          })}
-        </div>
-
         <div className="relative mt-14">
           {/* Continuous vertical track */}
           <div
@@ -56,14 +21,12 @@ export default function Experience() {
             aria-hidden="true"
           />
           <div
-            className="absolute inset-y-0 left-3 md:left-6 w-px origin-top bg-linear-to-b from-signal via-accent to-transparent"
+            className="absolute inset-y-0 left-3 md:left-6 w-px origin-top bg-linear-to-b from-accent via-signal to-transparent"
             aria-hidden="true"
           />
 
           <div className="space-y-12 pl-8 md:pl-16">
-            {filteredExperiences.map((entry, index) => {
-              const isCurrent = entry.current
-
+            {experiences.map((entry, index) => {
               return (
                 <motion.div
                   key={entry.id}
@@ -76,30 +39,14 @@ export default function Experience() {
                   {/* Node beacon on track */}
                   <div
                     aria-hidden="true"
-                    className={`absolute top-6 -left-8 md:-left-16 size-4 -translate-x-1/2 rounded-full border-2 transition-all ${
-                      isCurrent
-                        ? 'border-signal bg-void shadow-[0_0_14px_rgba(34,211,238,0.9)]'
-                        : 'border-accent bg-void shadow-[0_0_12px_rgba(139,92,246,0.7)]'
-                    }`}
+                    className="absolute top-6 -left-8 md:-left-16 size-4 -translate-x-1/2 rounded-full border-2 border-accent bg-void shadow-[0_0_12px_rgba(139,92,246,0.7)]"
                   >
-                    <span
-                      className={`absolute inset-0.5 rounded-full ${
-                        isCurrent ? 'bg-signal animate-ping opacity-60' : 'bg-accent'
-                      }`}
-                    />
+                    <span className="absolute inset-0.5 rounded-full bg-accent" />
                   </div>
 
                   <SpotlightCard
-                    spotlightColor={
-                      isCurrent
-                        ? 'rgba(34, 211, 238, 0.18)'
-                        : 'rgba(139, 92, 246, 0.2)'
-                    }
-                    borderColor={
-                      isCurrent
-                        ? 'rgba(34, 211, 238, 0.5)'
-                        : 'rgba(139, 92, 246, 0.45)'
-                    }
+                    spotlightColor="rgba(139, 92, 246, 0.2)"
+                    borderColor="rgba(139, 92, 246, 0.45)"
                     className="group p-6 md:p-8"
                   >
                     {/* Header meta */}
@@ -110,21 +57,6 @@ export default function Experience() {
                           <span>
                             {entry.start} — {entry.end}
                           </span>
-                        </span>
-
-                        <span
-                          className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 font-mono text-[11px] font-medium border ${
-                            isCurrent
-                              ? 'border-signal/40 bg-signal/15 text-signal'
-                              : 'border-edge bg-surface text-muted'
-                          }`}
-                        >
-                          {isCurrent ? (
-                            <span className="size-1.5 rounded-full bg-signal animate-pulse" />
-                          ) : (
-                            <CheckCircle2 className="size-3 text-accent transition-colors duration-200 group-hover:text-signal" />
-                          )}
-                          <span>{entry.statusBadge}</span>
                         </span>
                       </div>
 

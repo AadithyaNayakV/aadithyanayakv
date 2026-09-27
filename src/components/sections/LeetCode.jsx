@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Award, CheckCircle, Code2, ExternalLink, RefreshCw, Trophy, Zap } from 'lucide-react'
+import { Award, CheckCircle, Code2, ExternalLink, Trophy, Zap } from 'lucide-react'
 import developerData from '../../data/developer-data.json'
 import SectionHeading from '../ui/SectionHeading'
 import SpotlightCard from '../ui/SpotlightCard'
@@ -56,12 +56,6 @@ export default function LeetCode() {
                       </h4>
                     </div>
                   </div>
-
-                  {leetcode.ranking ? (
-                    <span className="rounded-full border border-signal/40 bg-signal/10 px-2.5 py-0.5 font-mono text-[11px] text-signal font-medium">
-                      Rank #{leetcode.ranking.toLocaleString()}
-                    </span>
-                  ) : null}
                 </div>
 
                 <div className="mt-8 text-center sm:text-left">

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ExternalLink, GitFork, RefreshCw, Star } from 'lucide-react'
+import { ExternalLink, GitFork, Star } from 'lucide-react'
 import developerData from '../../data/developer-data.json'
 import SectionHeading from '../ui/SectionHeading'
 import SpotlightCard from '../ui/SpotlightCard'
@@ -41,7 +41,7 @@ export default function GitHub() {
           <SectionHeading
             index="06"
             title="Project Repositories & GitHub"
-            lede="Open-source systems and production codebases built end to end."
+            lede="Personal and academic projects exploring full-stack and AI systems."
           />
         </div>
 

@@ -54,9 +54,15 @@ export default function Hero() {
       <div className="shell grid w-full items-center gap-10 md:grid-cols-12">
         {/* Left Side: Identity, Positioning & Quick CTAs */}
         <div className="md:col-span-8 lg:col-span-7">
+          {/* Open to Work Status Badge */}
+          <div data-hero-line className="mt-16 mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 font-mono text-xs font-medium text-emerald-600 dark:text-emerald-400 backdrop-blur-md">
+            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Open to Full-Stack & AI Engineering Roles</span>
+          </div>
+
           <h1
             data-hero-line
-            className="text-5xl leading-[1.03] font-semibold tracking-tight text-ink md:text-6xl lg:text-7xl mt-16"
+            className="text-5xl leading-[1.03] font-semibold tracking-tight text-ink md:text-6xl lg:text-7xl"
           >
             {site.name}
           </h1>
@@ -108,7 +114,7 @@ export default function Hero() {
               className="group inline-flex items-center gap-2 rounded-md border border-edge bg-surface/80 px-4 py-2.5 text-sm text-ink backdrop-blur-md transition-all hover:border-accent/60 hover:bg-surface active:scale-[0.98]"
             >
               <ArrowDownToLine className="size-4 text-accent transition-all duration-200 group-hover:text-signal group-hover:translate-y-0.5" />
-              <span>Download Résumé</span>
+              <span>Download Resume</span>
             </a>
 
             {/* LeetCode quick button */}

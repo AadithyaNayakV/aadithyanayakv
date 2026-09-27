@@ -1,4 +1,4 @@
-import { Bot, Cpu, Layers, Network, ShieldCheck, Sparkles } from 'lucide-react'
+import { Bot, Layers, Network, ShieldCheck, Sparkles } from 'lucide-react'
 import { useLayoutEffect, useRef } from 'react'
 import { site } from '../../data/site'
 import { EASE, REVEAL_START, gsap } from '../../lib/gsapConfig'
@@ -82,7 +82,7 @@ export default function About() {
         <div className="relative rounded-3xl border border-edge bg-surface/85 p-7 md:p-14 shadow-xs overflow-hidden backdrop-blur-md">
           <SectionHeading
             title="About Me"
-            lede="Full-Stack Developer and AI Engineer building resilient architectures and intelligent platforms."
+            lede="Background, technical focus, and engineering foundations."
           />
 
           {/* Narrative Biography */}
@@ -155,7 +155,7 @@ export default function About() {
             <div className="flex items-center gap-4">
               <span>{site.location}</span>
               <span className="hidden sm:inline opacity-30">•</span>
-              <span className="hidden sm:inline text-accent">Clean Code & Resilient Systems</span>
+              <span className="hidden sm:inline text-accent">Clean Code & Practical Systems</span>
             </div>
           </div>
         </div>

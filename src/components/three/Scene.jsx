@@ -2,14 +2,12 @@ import { Canvas } from '@react-three/fiber'
 import { Suspense, useEffect, useMemo, useRef } from 'react'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { gsap, ScrollTrigger } from '../../lib/gsapConfig'
-import { useTheme } from '../../context/ThemeContext'
 import Particles from './Particles'
 import SceneLighting from './SceneLighting'
 
 export default function Scene() {
   const wrapper = useRef(null)
   const reducedMotion = useReducedMotion()
-  const { theme } = useTheme()
   const eventSource = useMemo(() => document.getElementById('root'), [])
 
   useEffect(() => {

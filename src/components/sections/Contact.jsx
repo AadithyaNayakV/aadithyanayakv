@@ -48,13 +48,39 @@ export default function Contact() {
     window.setTimeout(() => setCopied(false), 2000)
   }
 
+  const handleEmailAction = (e) => {
+    e?.preventDefault?.()
+
+    // 1. Copy to clipboard immediately for instant utility
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(site.contact.email)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 2500)
+    }
+
+    // 2. Invoke OS mail client
+    window.location.href = `mailto:${site.contact.email}`
+
+    // 3. Robust fallback: If document is still focused after 450ms (no native mail client installed),
+    // open web Gmail compose directly so the user is never left with nothing happening
+    window.setTimeout(() => {
+      if (document.hasFocus()) {
+        window.open(
+          `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(site.contact.email)}`,
+          '_blank',
+          'noopener,noreferrer',
+        )
+      }
+    }, 450)
+  }
+
   return (
     <section id="contact" ref={scope} className="relative z-10 py-28 md:py-36">
       <div className="shell">
         <SectionHeading
           index="08"
           title="Get In Touch"
-          lede="Let's build reliable software systems, intelligent agent architectures, and responsive products together."
+          lede="Have an opportunity or question? Feel free to reach out directly through any of the channels below."
         />
 
         <div data-contact-block className="mt-14">
@@ -64,7 +90,13 @@ export default function Contact() {
             </p>
 
             <div className="flex flex-wrap items-center gap-4">
-              <Button as="a" href={`mailto:${site.contact.email}`} variant="primary" icon={Mail}>
+              <Button
+                as="a"
+                href={`mailto:${site.contact.email}`}
+                onClick={handleEmailAction}
+                variant="primary"
+                icon={Mail}
+              >
                 Email Me
               </Button>
               <button
@@ -113,8 +145,9 @@ export default function Contact() {
                   >
                     <a
                       href={social.href}
+                      onClick={isEmail ? handleEmailAction : undefined}
                       target={social.href.startsWith('mailto:') ? undefined : '_blank'}
-                      rel="noreferrer noopener"
+                      rel={social.href.startsWith('mailto:') ? undefined : 'noreferrer noopener'}
                       className="flex h-full flex-col justify-between p-6 cursor-pointer"
                     >
                       <div>

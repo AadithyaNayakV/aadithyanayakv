@@ -115,11 +115,11 @@ export default function Nav() {
             <a
               href={site.resumeUrl}
               download
-              aria-label="Download Résumé"
+              aria-label="Download Resume"
               className="group inline-flex items-center gap-1.5 rounded-full border border-edge bg-surface/80 px-3 py-1.5 font-mono text-xs text-ink backdrop-blur-md transition-all hover:border-accent/60 hover:bg-surface active:scale-95"
             >
               <ArrowDownToLine className="size-3.5 text-accent transition-colors duration-200 group-hover:text-signal group-hover:translate-y-0.5" />
-              <span className="hidden sm:inline">Résumé</span>
+              <span className="hidden sm:inline">Resume</span>
             </a>
 
             {/* Theme Toggle Button */}
@@ -215,7 +215,7 @@ export default function Nav() {
                       key={s.label}
                       href={s.href}
                       target={s.href.startsWith('mailto:') ? undefined : '_blank'}
-                      rel="noreferrer noopener"
+                      rel={s.href.startsWith('mailto:') ? undefined : 'noreferrer noopener'}
                       className="font-mono text-xs text-muted transition-colors hover:text-signal"
                     >
                       {s.label}

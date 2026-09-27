@@ -217,7 +217,7 @@ export default function ProjectCard({ project }) {
             <img
               src={project.image}
               alt={`${project.title} interface`}
-              className="size-full object-cover"
+              className="size-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
           ) : (

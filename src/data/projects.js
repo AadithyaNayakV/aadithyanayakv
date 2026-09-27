@@ -23,7 +23,7 @@ export const projects = [
     year: '2025',
     live: null,
     repo: 'https://github.com/AadithyaNayakV/fairplace',
-    image: null,
+    image: '/projects/fairplace.webp',
     preview: { kind: 'orbit', seed: 42 },
   },
   {
@@ -41,7 +41,7 @@ export const projects = [
     year: '2025',
     live: null,
     repo: 'https://github.com/AadithyaNayakV/Startup-Foundary',
-    image: null,
+    image: '/projects/startup-foundry.webp',
     preview: { kind: 'grid', seed: 3 },
   },
   {
@@ -59,7 +59,7 @@ export const projects = [
     year: '2025',
     live: null,
     repo: 'https://github.com/AadithyaNayakV/Jarvis',
-    image: null,
+    image: '/projects/jarvis.webp',
     preview: { kind: 'wave', seed: 7 },
   },
   {
@@ -77,7 +77,7 @@ export const projects = [
     year: '2025',
     live: null,
     repo: 'https://github.com/AadithyaNayakV/FinanceBot',
-    image: null,
+    image: '/projects/findad.webp',
     preview: { kind: 'stack', seed: 11 },
   },
 ]

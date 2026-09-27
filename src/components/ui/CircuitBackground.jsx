@@ -2,9 +2,9 @@ import { useEffect, useRef } from 'react'
 import { useTheme } from '../../context/ThemeContext'
 
 /**
- * Animated High-Tech PCB Circuit Board Background
- * Features realistic circuit board traces with 45°/90° bends, solder pad vias,
- * and high-speed data pulses traveling across motherboard pathways in real time.
+ * High-Tech PCB Circuit Board Background with subtle, steady movement.
+ * Speed is frame-rate independent (time-delta based) so it travels at the
+ * exact same calm, elegant speed across all 60Hz, 120Hz, 144Hz, and 240Hz devices.
  */
 export default function CircuitBackground() {
   const canvasRef = useRef(null)
@@ -21,44 +21,45 @@ export default function CircuitBackground() {
     let width = (canvas.width = window.innerWidth)
     let height = (canvas.height = window.innerHeight)
 
-    const handleResize = () => {
-      if (!canvas) return
-      width = canvas.width = window.innerWidth
-      height = canvas.height = window.innerHeight
-      generateTraces()
-    }
-    window.addEventListener('resize', handleResize)
-
-    // Generate circuit pathways
     let traces = []
     let pulses = []
 
-    function generateTraces() {
+    const generateTraces = () => {
+      width = canvas.width = window.innerWidth
+      height = canvas.height = window.innerHeight
+
       traces = []
       pulses = []
 
-      const gridSize = Math.max(60, Math.floor(width / 22))
+      const gridSize = Math.max(90, Math.floor(width / 16))
       const cols = Math.ceil(width / gridSize) + 1
       const rows = Math.ceil(height / gridSize) + 1
 
-      const traceCount = Math.min(45, Math.floor((width * height) / 28000))
+      // Significantly reduced trace count for a clean, minimal look
+      const traceCount = Math.min(14, Math.floor((width * height) / 90000))
+
+      let seed = 42
+      const random = () => {
+        seed = (seed * 16807) % 2147483647
+        return (seed - 1) / 2147483646
+      }
 
       for (let i = 0; i < traceCount; i++) {
-        const startX = Math.floor(Math.random() * cols) * gridSize
-        const startY = Math.floor(Math.random() * rows) * gridSize
+        const startX = Math.floor(random() * cols) * gridSize
+        const startY = Math.floor(random() * rows) * gridSize
 
         const points = [{ x: startX, y: startY }]
         let currX = startX
         let currY = startY
 
-        const segments = Math.floor(Math.random() * 4) + 3 // 3 to 6 segments per trace
+        const segments = Math.floor(random() * 3) + 2 // 2 to 4 segments per trace
 
         for (let s = 0; s < segments; s++) {
-          const dir = Math.floor(Math.random() * 4)
-          const dist = (Math.floor(Math.random() * 3) + 1) * gridSize
+          const dir = Math.floor(random() * 4)
+          const dist = (Math.floor(random() * 2) + 1) * gridSize
 
           // 45-degree chamfer bend or 90-degree orthogonal bend
-          const use45 = Math.random() > 0.4
+          const use45 = random() > 0.5
           if (use45) {
             const diagDist = gridSize
             if (dir === 0) {
@@ -86,36 +87,31 @@ export default function CircuitBackground() {
           points.push({ x: currX, y: currY })
         }
 
-        // Calculate total length
+        // Calculate total length and segment lengths
         let totalLength = 0
         const segmentLengths = []
         for (let p = 0; p < points.length - 1; p++) {
           const dx = points[p + 1].x - points[p].x
           const dy = points[p + 1].y - points[p].y
-          const len = Math.sqrt(dx * dx + dy * dy)
+          const len = Math.hypot(dx, dy)
           segmentLengths.push(len)
           totalLength += len
         }
 
-        if (totalLength > 100) {
+        if (totalLength > 80) {
           const trace = {
             points,
             segmentLengths,
             totalLength,
-            hasViaStart: Math.random() > 0.3,
-            hasViaEnd: Math.random() > 0.3,
           }
           traces.push(trace)
 
-          // 1 to 2 light pulses per trace
-          const pulseCount = Math.random() > 0.5 ? 2 : 1
-          for (let k = 0; k < pulseCount; k++) {
+          // Only a single gentle pulse for select traces (~6 pulses total across whole screen)
+          if (i % 2 === 0) {
             pulses.push({
               trace,
-              progress: Math.random(),
-              speed: 0.0012 + Math.random() * 0.002, // variable pulse speed
-              size: 2.2 + Math.random() * 1.5,
-              colorType: Math.random() > 0.5 ? 'cyan' : 'violet',
+              progress: random(), // random starting position
+              colorType: i % 4 === 0 ? 'cyan' : 'violet',
             })
           }
         }
@@ -124,8 +120,8 @@ export default function CircuitBackground() {
 
     generateTraces()
 
-    // Helper: get coordinate along a multi-segment line given 0..1 progress
-    function getPointAtProgress(trace, progress) {
+    // Helper: calculate coordinates along segmented path
+    const getPointAtProgress = (trace, progress) => {
       const targetDist = progress * trace.totalLength
       let accumulated = 0
 
@@ -145,26 +141,24 @@ export default function CircuitBackground() {
       return trace.points[0]
     }
 
-    let mouseX = -1000
-    let mouseY = -1000
-    const onMouseMove = (e) => {
-      mouseX = e.clientX
-      mouseY = e.clientY
-    }
-    window.addEventListener('mousemove', onMouseMove)
+    const isDark = theme !== 'light'
+    const traceStroke = isDark ? 'rgba(139, 92, 246, 0.09)' : 'rgba(99, 102, 241, 0.07)'
+    const viaColor = isDark ? 'rgba(34, 211, 238, 0.28)' : 'rgba(6, 182, 212, 0.28)'
+    const cyanColor = isDark ? '#22d3ee' : '#0891b2'
+    const violetColor = isDark ? '#a855f7' : '#7c3aed'
 
-    // Render loop
-    const render = () => {
+    // Static speed: 1 full circuit traversal takes ~16 seconds on EVERY device (60Hz, 120Hz, 144Hz, 240Hz)
+    const SPEED_PER_SECOND = 0.055
+
+    let lastTime = performance.now()
+
+    const render = (currentTime) => {
+      const dt = Math.min((currentTime - lastTime) / 1000, 0.05)
+      lastTime = currentTime
+
       ctx.clearRect(0, 0, width, height)
 
-      const isDark = theme !== 'light'
-      const traceBaseAlpha = isDark ? 0.14 : 0.09
-      const traceStroke = isDark ? 'rgba(139, 92, 246, ' : 'rgba(99, 102, 241, '
-      const viaColor = isDark ? 'rgba(34, 211, 238, 0.35)' : 'rgba(6, 182, 212, 0.35)'
-      const cyanGlow = isDark ? '#22d3ee' : '#0891b2'
-      const violetGlow = isDark ? '#a855f7' : '#7c3aed'
-
-      // 1. Draw motherboard circuit traces
+      // 1. Draw static traces and vias
       ctx.lineWidth = 1.2
       ctx.lineCap = 'round'
       ctx.lineJoin = 'round'
@@ -174,15 +168,7 @@ export default function CircuitBackground() {
         const pts = trace.points
         if (pts.length < 2) continue
 
-        // Check proximity to mouse for interactive trace glow
-        let extraAlpha = 0
-        const firstPt = pts[0]
-        const distToMouse = Math.hypot(firstPt.x - mouseX, firstPt.y - mouseY)
-        if (distToMouse < 260) {
-          extraAlpha = (1 - distToMouse / 260) * 0.22
-        }
-
-        ctx.strokeStyle = `${traceStroke}${traceBaseAlpha + extraAlpha})`
+        ctx.strokeStyle = traceStroke
         ctx.beginPath()
         ctx.moveTo(pts[0].x, pts[0].y)
         for (let p = 1; p < pts.length; p++) {
@@ -190,48 +176,41 @@ export default function CircuitBackground() {
         }
         ctx.stroke()
 
-        // Solder pad vias
-        if (trace.hasViaStart) {
-          ctx.fillStyle = viaColor
-          ctx.beginPath()
-          ctx.arc(pts[0].x, pts[0].y, 2.5, 0, Math.PI * 2)
-          ctx.fill()
-        }
-        if (trace.hasViaEnd) {
-          ctx.fillStyle = viaColor
-          ctx.beginPath()
-          ctx.arc(pts[pts.length - 1].x, pts[pts.length - 1].y, 2.5, 0, Math.PI * 2)
-          ctx.fill()
-        }
+        // Solder pad vias at endpoints
+        ctx.fillStyle = viaColor
+        ctx.beginPath()
+        ctx.arc(pts[0].x, pts[0].y, 2.2, 0, Math.PI * 2)
+        ctx.fill()
+
+        ctx.beginPath()
+        ctx.arc(pts[pts.length - 1].x, pts[pts.length - 1].y, 2.2, 0, Math.PI * 2)
+        ctx.fill()
       }
 
-      // 2. Draw Traveling Light Pulses (data packets)
+      // 2. Draw subtle, slow-moving pulses (speed strictly fixed by elapsed seconds)
       for (let i = 0; i < pulses.length; i++) {
         const pulse = pulses[i]
-        pulse.progress += pulse.speed
-        if (pulse.progress > 1) {
-          pulse.progress = 0
-        }
+        pulse.progress = (pulse.progress + dt * SPEED_PER_SECOND) % 1
 
         const headPos = getPointAtProgress(pulse.trace, pulse.progress)
-        const tailProgress = Math.max(0, pulse.progress - 0.05)
+        const tailProgress = Math.max(0, pulse.progress - 0.04)
         const tailPos = getPointAtProgress(pulse.trace, tailProgress)
 
-        const color = pulse.colorType === 'cyan' ? cyanGlow : violetGlow
+        const color = pulse.colorType === 'cyan' ? cyanColor : violetColor
 
-        // Glowing pulse head
+        // Soft, calm pulse head
         ctx.save()
-        ctx.shadowBlur = isDark ? 10 : 6
+        ctx.shadowBlur = isDark ? 6 : 4
         ctx.shadowColor = color
         ctx.fillStyle = color
         ctx.beginPath()
-        ctx.arc(headPos.x, headPos.y, pulse.size, 0, Math.PI * 2)
+        ctx.arc(headPos.x, headPos.y, 2.0, 0, Math.PI * 2)
         ctx.fill()
 
-        // Faint trailing beam
-        ctx.lineWidth = pulse.size * 0.8
+        // Subtle soft trail
+        ctx.lineWidth = 1.2
         ctx.strokeStyle = color
-        ctx.globalAlpha = 0.4
+        ctx.globalAlpha = 0.35
         ctx.beginPath()
         ctx.moveTo(tailPos.x, tailPos.y)
         ctx.lineTo(headPos.x, headPos.y)
@@ -242,12 +221,16 @@ export default function CircuitBackground() {
       animationFrameId = requestAnimationFrame(render)
     }
 
-    render()
+    animationFrameId = requestAnimationFrame(render)
+
+    const handleResize = () => {
+      generateTraces()
+    }
+    window.addEventListener('resize', handleResize)
 
     return () => {
       cancelAnimationFrame(animationFrameId)
       window.removeEventListener('resize', handleResize)
-      window.removeEventListener('mousemove', onMouseMove)
     }
   }, [theme])
 
@@ -255,7 +238,7 @@ export default function CircuitBackground() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-0 opacity-80 transition-opacity duration-700"
+      className="pointer-events-none fixed inset-0 z-0 opacity-70 transition-opacity duration-500"
     />
   )
 }
