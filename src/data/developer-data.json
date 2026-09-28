@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-09-27T05:47:50.585Z",
+  "lastUpdated": "2026-09-28T05:05:57.859Z",
   "github": {
     "username": "AadithyaNayakV",
     "name": "Aadithya Nayak V",
     "avatarUrl": "https://avatars.githubusercontent.com/u/181184562?v=4",
     "profileUrl": "https://github.com/AadithyaNayakV",
-    "publicRepos": 14,
+    "publicRepos": 15,
     "followers": 9,
     "featuredRepos": [
       {
@@ -87,7 +87,7 @@
         "stars": 0,
         "forks": 0,
         "url": "https://github.com/AadithyaNayakV/DSA-leetcode-",
-        "updatedAt": "2026-09-05T12:51:26Z",
+        "updatedAt": "2026-09-27T14:23:25Z",
         "topics": [
           "algorithms",
           "data-structures",
@@ -116,11 +116,11 @@
   "leetcode": {
     "username": "DKSbFeaWen",
     "profileUrl": "https://leetcode.com/u/DKSbFeaWen/",
-    "totalSolved": 711,
+    "totalSolved": 713,
     "easySolved": 345,
-    "mediumSolved": 329,
+    "mediumSolved": 331,
     "hardSolved": 37,
-    "ranking": 94871,
+    "ranking": 94254,
     "contestRating": null,
     "contestRank": null,
     "topPercentage": null
