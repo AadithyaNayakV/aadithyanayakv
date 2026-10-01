@@ -28,14 +28,16 @@ const LANGUAGE_COLORS = {
 export default function GitHub() {
   const { github } = developerData
 
-  // Display only core project repositories
-  const projectRepoKeys = ['Startup-Foundary', 'FairPlace', 'Jarvis', 'FinanceBot', 'fairplace']
-  const projectRepos = (github.featuredRepos || []).filter((repo) =>
-    projectRepoKeys.some((key) => key.toLowerCase() === (repo.rawName || repo.name).toLowerCase()),
-  )
+  // Display exactly top 2 project repositories
+  const projectRepoKeys = ['Startup-Foundary', 'FairPlace']
+  const projectRepos = (github.featuredRepos || [])
+    .filter((repo) =>
+      projectRepoKeys.some((key) => key.toLowerCase() === (repo.rawName || repo.name).toLowerCase()),
+    )
+    .slice(0, 2)
 
   return (
-    <section id="github" className="relative z-10 py-28 md:py-36">
+    <section id="github" className="relative z-10 py-20 md:py-28">
       <div className="shell">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <SectionHeading
@@ -219,15 +221,15 @@ export default function GitHub() {
         </div>
 
         {/* Explore All Repositories on GitHub CTA */}
-        <div className="mt-12 flex justify-center">
+        <div className="mt-8 flex justify-center">
           <a
             href="https://github.com/AadithyaNayakV?tab=repositories"
             target="_blank"
             rel="noreferrer noopener"
-            className="group inline-flex items-center gap-3 rounded-full border border-edge bg-surface/90 px-6 py-3.5 font-mono text-xs font-semibold text-ink shadow-md backdrop-blur-md transition-all hover:border-signal hover:bg-surface hover:scale-[1.02] active:scale-[0.98]"
+            className="group inline-flex items-center gap-3 rounded-full border border-edge bg-surface/90 px-6 py-3 font-mono text-xs font-semibold text-ink shadow-md backdrop-blur-md transition-all hover:border-signal hover:bg-surface hover:scale-[1.02] active:scale-[0.98]"
           >
             <GithubIcon className="size-4 text-signal transition-transform duration-200 group-hover:rotate-12" />
-            <span>Explore All 13+ Repositories on GitHub</span>
+            <span>Explore All {github.publicRepos || 14} Repositories on GitHub</span>
             <ExternalLink className="size-3.5 text-muted transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-signal" />
           </a>
         </div>

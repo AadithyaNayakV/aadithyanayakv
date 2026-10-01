@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { navItems, site } from '../../data/site'
 import { ScrollTrigger } from '../../lib/gsapConfig'
 import { getLenis, scrollToSection } from '../../lib/lenis'
-import ResumeDownloadButton from '../ui/ResumeDownloadButton'
 import ThemeToggle from '../ui/ThemeToggle'
 import { GMAIL_COMPOSE_URL, handleEmailClick } from '../../utils/mail'
 
@@ -106,21 +105,21 @@ export default function Nav() {
               aria-label="Back to top"
               className="font-mono text-xs font-semibold tracking-widest text-accent transition-colors hover:text-signal"
             >
-              ANV
+              
             </a>
           </div>
 
 
           <div className="flex items-center gap-2.5">
-            {/* Quick Resume Download */}
+            {/* Quick Resume Download (Only kept at the top) */}
             <a
               href={site.resumeUrl}
               download
               aria-label="Download Resume"
-              className="group inline-flex items-center gap-1.5 rounded-full border border-edge bg-surface/80 px-3 py-1.5 font-mono text-xs text-ink backdrop-blur-md transition-all hover:border-accent/60 hover:bg-surface active:scale-95"
+              className="group inline-flex items-center gap-1.5 rounded-full border border-edge bg-surface/80 px-3.5 py-1.5 font-mono text-xs font-medium text-ink backdrop-blur-md transition-all hover:border-accent/60 hover:text-accent hover:bg-surface active:scale-95 shadow-xs"
             >
               <ArrowDownToLine className="size-3.5 text-accent transition-colors duration-200 group-hover:text-signal group-hover:translate-y-0.5" />
-              <span className="hidden sm:inline">Resume</span>
+              <span>Resume</span>
             </a>
 
             {/* Theme Toggle Button */}
@@ -199,39 +198,9 @@ export default function Nav() {
                 variants={item}
                 className="mt-8 flex flex-wrap items-center justify-between gap-6 border-t border-edge pt-6"
               >
-                <div className="flex flex-wrap items-center gap-4">
-                  <ThemeToggle showLabel />
-                  <ResumeDownloadButton />
-                  <a
-                    href={GMAIL_COMPOSE_URL}
-                    onClick={handleEmailClick}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="link-draw font-mono text-xs text-muted hover:text-ink"
-                  >
-                    {site.contact.email}
-                  </a>
-                </div>
+               
 
-                <div className="flex items-center gap-4">
-                  {site.socials.map((s) => {
-                    const isEmail = s.label === 'Email'
-                    const href = isEmail ? GMAIL_COMPOSE_URL : s.href
-
-                    return (
-                      <a
-                        key={s.label}
-                        href={href}
-                        onClick={isEmail ? handleEmailClick : undefined}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="font-mono text-xs text-muted transition-colors hover:text-signal"
-                      >
-                        {s.label}
-                      </a>
-                    )
-                  })}
-                </div>
+                
               </motion.div>
             </nav>
           </motion.div>

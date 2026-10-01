@@ -4,7 +4,6 @@ import { site } from '../../data/site'
 import { EASE, REVEAL_START, gsap } from '../../lib/gsapConfig'
 import { motionState } from '../../lib/motionState'
 import Button from '../ui/Button'
-import ResumeDownloadButton from '../ui/ResumeDownloadButton'
 import SectionHeading from '../ui/SectionHeading'
 import SpotlightCard from '../ui/SpotlightCard'
 import { GMAIL_COMPOSE_URL, handleEmailClick } from '../../utils/mail'
@@ -93,7 +92,6 @@ export default function Contact() {
                   </>
                 )}
               </button>
-              <ResumeDownloadButton />
             </div>
           </div>
 
