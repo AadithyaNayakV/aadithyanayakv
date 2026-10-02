@@ -11,7 +11,7 @@ export default function Education() {
     <section id="education" className="relative z-10 py-20 md:py-28">
       <div className="shell">
         <SectionHeading
-          index="03"
+          index="05"
           title="Education & Academics"
           lede="Computer science curriculum, algorithmic excellence, and academic foundation."
         />

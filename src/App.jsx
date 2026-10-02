@@ -71,11 +71,11 @@ export default function App() {
           <SectionPortalDivider />
           <Experience />
           <SectionPortalDivider />
-          <Education />
-          <SectionPortalDivider />
           <Projects />
           <SectionPortalDivider />
           <Skills />
+          <SectionPortalDivider />
+          <Education />
           <SectionPortalDivider />
           <GitHub />
           <SectionPortalDivider />

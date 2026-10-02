@@ -1,140 +1,146 @@
-import { motion } from 'framer-motion'
-import { Brain, Cloud, Code, Database, Sparkles } from 'lucide-react'
+import { Brain, Database, Layout, Sparkles, Terminal, Wrench } from 'lucide-react'
 import { useState } from 'react'
 import { skillCategories } from '../../data/skills'
 import SectionHeading from '../ui/SectionHeading'
-import SpotlightCard from '../ui/SpotlightCard'
+import { TechIcon } from '../ui/TechIcons'
+import Skills3DModel from '../three/Skills3DModel'
 
 const CATEGORY_ICONS = {
-  fullstack: Code,
-  'ai-engineering': Brain,
-  'data-storage': Database,
-  'cloud-devops': Cloud,
+  languages: Terminal,
+  frontend: Layout,
+  'backend-ai': Brain,
+  databases: Database,
+  tools: Wrench,
 }
 
 export default function Skills() {
-  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [mobileCategory, setMobileCategory] = useState('all')
 
-  const displayedCategories =
-    selectedCategory === 'all'
+  const displayedMobileCategories =
+    mobileCategory === 'all'
       ? skillCategories
-      : skillCategories.filter((c) => c.id === selectedCategory)
+      : skillCategories.filter((c) => c.id === mobileCategory)
 
   return (
     <section id="skills" className="relative z-10 py-20 md:py-28">
       <div className="shell">
         <SectionHeading
-          index="05"
+          index="04"
           title="Technical Skills"
-          lede="Core engineering competencies across Full-Stack, AI Systems, Databases, and Cloud Infrastructure."
+          lede="Exact core proficiencies across Programming Languages, Frontend, Backend & AI, Databases, and Tools & Platforms."
         />
 
-        {/* Category Filter Chips */}
-        <div className="mt-8 flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setSelectedCategory('all')}
-            className={`rounded-xl border px-3.5 py-1.5 font-mono text-xs transition-all duration-200 ${
-              selectedCategory === 'all'
-                ? 'border-accent bg-accent/15 text-accent font-semibold shadow-xs'
-                : 'border-edge bg-surface/80 text-muted hover:border-accent/40 hover:text-ink'
-            }`}
-          >
-            All Areas
-          </button>
+        {/* ========================================================================= */}
+        {/* LAPTOP / DESKTOP (MD+): Interactive 3D Neural Nodes Spawner */}
+        {/* ========================================================================= */}
+        <div className="mt-8 hidden md:block">
+          <Skills3DModel />
+        </div>
 
-          {skillCategories.map((cat) => {
-            const labelMap = {
-              fullstack: 'Full-Stack',
-              'ai-engineering': 'AI Systems',
-              'data-storage': 'Databases',
-              'cloud-devops': 'Cloud & DevOps',
-            }
-            const displayLabel = labelMap[cat.id] || cat.title
-            const isActive = selectedCategory === cat.id
-
-            return (
+        {/* ========================================================================= */}
+        {/* MOBILE (< MD): Clean Normal Bento Cards (Zero Lag, Fast & Responsive) */}
+        {/* ========================================================================= */}
+        <div className="mt-6 md:hidden">
+          {/* Mobile Category Filter Tabs */}
+          <div className="flex flex-wrap items-center gap-1.5 pb-4 border-b border-edge/60">
+            <button
+              type="button"
+              onClick={() => setMobileCategory('all')}
+              className={`rounded-lg border px-3 py-1 font-mono text-xs transition-colors ${
+                mobileCategory === 'all'
+                  ? 'border-accent bg-accent/15 text-accent font-semibold'
+                  : 'border-edge bg-surface text-muted'
+              }`}
+            >
+              All
+            </button>
+            {skillCategories.map((cat) => (
               <button
                 key={cat.id}
                 type="button"
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`rounded-xl border px-3.5 py-1.5 font-mono text-xs transition-all duration-200 ${
-                  isActive
-                    ? 'border-accent bg-accent/15 text-accent font-semibold shadow-xs'
-                    : 'border-edge bg-surface/80 text-muted hover:border-accent/40 hover:text-ink'
+                onClick={() => setMobileCategory(cat.id)}
+                className={`rounded-lg border px-3 py-1 font-mono text-xs transition-colors flex items-center gap-1.5 ${
+                  mobileCategory === cat.id
+                    ? 'border-accent bg-accent/15 text-accent font-semibold'
+                    : 'border-edge bg-surface text-muted'
                 }`}
               >
-                {displayLabel}
+                <span
+                  className="size-1.5 rounded-full"
+                  style={{ backgroundColor: cat.themeColor }}
+                />
+                <span>{cat.shortTitle || cat.title}</span>
               </button>
-            )
-          })}
-        </div>
+            ))}
+          </div>
 
-        {/* Compact Structured Grid */}
-        <div className="mt-10 grid gap-5 md:gap-6 lg:grid-cols-2">
-          {displayedCategories.map((category, index) => {
-            const Icon = CATEGORY_ICONS[category.id] || Sparkles
+          {/* Normal Clean Mobile Cards */}
+          <div className="flex flex-col gap-4 mt-4">
+            {displayedMobileCategories.map((category) => {
+              const Icon = CATEGORY_ICONS[category.id] || Sparkles
 
-            return (
-              <motion.div
-                key={category.id}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.45, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                className="h-full"
-              >
-                <SpotlightCard
-                  spotlightColor="rgba(139, 92, 246, 0.18)"
-                  borderColor="rgba(139, 92, 246, 0.4)"
-                  className="group p-5 md:p-6 h-full flex flex-col justify-between"
+              return (
+                <div
+                  key={category.id}
+                  className="rounded-xl border border-edge/80 bg-surface/80 p-4 shadow-xs"
                 >
-                  <div>
-                    {/* Category Header */}
-                    <div className="flex items-center justify-between border-b border-edge/60 pb-3.5">
-                      <div className="flex items-center gap-2.5">
-                        <div className="grid size-8 place-items-center rounded-lg bg-accent/15 text-accent transition-colors duration-200 group-hover:bg-signal/15 group-hover:text-signal">
-                          <Icon className="size-4 transition-colors duration-200 group-hover:text-signal" />
-                        </div>
-                        <h3 className="font-display text-lg font-semibold text-ink">
+                  <div className="flex items-center justify-between border-b border-edge/60 pb-3">
+                    <div className="flex items-center gap-2.5">
+                      <div
+                        className="grid size-8 place-items-center rounded-lg"
+                        style={{
+                          backgroundColor: `${category.themeColor}18`,
+                          color: category.themeColor,
+                        }}
+                      >
+                        <Icon className="size-4" />
+                      </div>
+                      <div>
+                        <h3 className="font-display text-base font-semibold text-ink">
                           {category.title}
                         </h3>
+                        <span className="font-mono text-[10px] text-muted">
+                          {category.skills.length} Technologies
+                        </span>
                       </div>
-                      <span className="rounded-full border border-edge bg-surface px-2.5 py-0.5 font-mono text-[10px] text-signal font-medium">
-                        {category.badge}
-                      </span>
                     </div>
-
-                    <p className="mt-3 text-xs font-mono text-muted leading-relaxed">
-                      {category.description}
-                    </p>
-
-                    {/* Compact Skills Cloud */}
-                    <ul className="mt-4 flex flex-wrap gap-2">
-                      {category.skills.map((skill) => (
-                        <motion.li
-                          key={skill.name}
-                          whileHover={{ scale: 1.04, y: -1 }}
-                          whileTap={{ scale: 0.96 }}
-                          transition={{ type: 'spring', stiffness: 450, damping: 22 }}
-                          className={`cursor-default flex items-center gap-1.5 rounded-md border px-2.5 py-1 font-mono text-xs transition-colors duration-150 ${
-                            skill.emphasis
-                              ? 'border-accent/40 bg-accent/15 text-ink font-medium shadow-[0_0_10px_-4px_rgba(139,92,246,0.3)]'
-                              : 'border-edge bg-surface/70 text-muted hover:border-edge/90 hover:text-ink'
-                          }`}
-                        >
-                          {skill.emphasis ? (
-                            <span className="size-1.5 rounded-full bg-signal shadow-[0_0_5px_rgba(34,211,238,0.8)]" />
-                          ) : null}
-                          <span>{skill.name}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
+                    <span
+                      className="font-mono text-[10px] font-medium px-2 py-0.5 rounded border"
+                      style={{
+                        borderColor: `${category.themeColor}30`,
+                        color: category.themeColor,
+                      }}
+                    >
+                      {category.badge}
+                    </span>
                   </div>
-                </SpotlightCard>
-              </motion.div>
-            )
-          })}
+
+                  <p className="mt-2.5 text-xs font-mono text-muted leading-relaxed">
+                    {category.description}
+                  </p>
+
+                  {/* Clean Mobile Tech Grid */}
+                  <div className="mt-3.5 grid grid-cols-2 gap-2">
+                    {category.skills.map((skill) => (
+                      <div
+                        key={skill.name}
+                        className="flex items-center gap-2.5 rounded-lg border border-edge/60 bg-surface/60 px-3 py-2"
+                      >
+                        <TechIcon
+                          name={skill.name}
+                          color={skill.color}
+                          className="size-3.5 shrink-0"
+                        />
+                        <span className="truncate text-xs font-medium text-ink">
+                          {skill.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>
