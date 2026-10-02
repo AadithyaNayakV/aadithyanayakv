@@ -40,7 +40,7 @@ export default function Projects() {
   }, [])
 
   return (
-    <section id="projects" ref={scope} className="relative z-10 py-28 md:py-36">
+    <section id="projects" ref={scope} className="relative z-10 py-20 md:py-28">
       <div className="shell">
         <SectionHeading
           index="04"
@@ -48,7 +48,7 @@ export default function Projects() {
           lede="Production architectures built end to end, focusing on real-time event distribution, AI inference moderation, and reactive user interfaces."
         />
 
-        <div className="mt-14 grid gap-8 md:grid-cols-2">
+        <div className="mt-10 grid gap-6 md:grid-cols-2 items-stretch">
           {projects.map((project) => (
             <div key={project.id} data-card-wrap>
               <ProjectCard project={project} />

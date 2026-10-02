@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { Briefcase, Calendar, ChevronDown, ChevronRight, MapPin, Sparkles } from 'lucide-react'
+import { Award, Briefcase, Calendar, ChevronDown, ChevronRight, ExternalLink, MapPin, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { experiences } from '../../data/experience'
 import SectionHeading from '../ui/SectionHeading'
@@ -71,9 +71,24 @@ export default function Experience() {
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-1.5 font-mono text-xs text-muted">
-                        <MapPin className="size-3.5 text-muted" />
-                        <span>{entry.location}</span>
+                      <div className="flex flex-wrap items-center gap-3">
+                        {entry.certificateUrl ? (
+                          <a
+                            href={entry.certificateUrl}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            className="group/cert inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent/15 px-3 py-1 font-mono text-xs font-medium text-accent backdrop-blur-md transition-all hover:bg-accent/25 hover:border-accent hover:text-signal active:scale-95 shadow-xs"
+                          >
+                            <Award className="size-3.5 text-accent transition-colors duration-200 group-hover/cert:text-signal" />
+                            <span>{entry.certificateLabel || 'Internship Certificate'}</span>
+                            <ExternalLink className="size-3 text-accent transition-transform duration-200 group-hover/cert:translate-x-0.5 group-hover/cert:text-signal" />
+                          </a>
+                        ) : null}
+
+                        <div className="flex items-center gap-1.5 font-mono text-xs text-muted">
+                          <MapPin className="size-3.5 text-muted" />
+                          <span>{entry.location}</span>
+                        </div>
                       </div>
                     </div>
 

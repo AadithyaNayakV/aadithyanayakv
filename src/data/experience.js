@@ -13,6 +13,8 @@ export const experiences = [
     start: 'September 2025',
     end: 'September 2026',
     current: false,
+    certificateUrl: '/Aadithya%20Nayak%20V%20Internship%20Completion%20Letter.pdf',
+    certificateLabel: 'Internship Certificate',
     summary:
       'Engineered scalable frontend modules and backend AI integrations for an AI-powered CRM and multi-tenant SaaS platform, improving UX responsiveness, optimizing state synchronization, and streamlining automated email processing pipelines.',
     achievements: [
