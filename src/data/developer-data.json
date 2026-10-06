@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-05T05:19:13.197Z",
+  "lastUpdated": "2026-10-06T06:02:58.761Z",
   "github": {
     "username": "AadithyaNayakV",
     "name": "Aadithya Nayak V",
@@ -65,11 +65,11 @@
         "name": "FinDad (FinanceBot)",
         "rawName": "FinanceBot",
         "description": "AI financial guidance assistant with multi-tier RAG, Redis semantic caching, and ChromaDB vector store.",
-        "language": "JavaScript",
+        "language": "Python",
         "stars": 0,
         "forks": 0,
         "url": "https://github.com/AadithyaNayakV/FinanceBot",
-        "updatedAt": "2026-09-22T15:53:51Z",
+        "updatedAt": "2026-10-05T17:12:08Z",
         "topics": [
           "fastapi",
           "langchain",
@@ -120,7 +120,7 @@
     "easySolved": 348,
     "mediumSolved": 342,
     "hardSolved": 39,
-    "ranking": 89643,
+    "ranking": 88733,
     "contestRating": null,
     "contestRank": null,
     "topPercentage": null
