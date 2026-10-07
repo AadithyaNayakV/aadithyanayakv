@@ -127,39 +127,39 @@
 
 ---
 
-### 📊 GitHub & Problem Solving Analytics
+### 🧩 Algorithmic Problem Solving & LeetCode
 
 <div align="center">
 
-  <!-- GitHub Readme Stats & Top Langs -->
-  <a href="https://github.com/AadithyaNayakV">
-    <img src="https://github-readme-stats.vercel.app/api?username=AadithyaNayakV&show_icons=true&theme=tokyonight&hide_border=true&count_private=true" alt="Aadithya's GitHub Stats" height="175"/>
-  </a>
-  <a href="https://github.com/AadithyaNayakV">
-    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=AadithyaNayakV&layout=compact&theme=tokyonight&hide_border=true" alt="Top Languages" height="175"/>
-  </a>
-
-  <br/><br/>
-
-  <!-- LeetCode Stats Badge / Overview -->
+  <!-- LeetCode Dynamic Stats Card -->
   <a href="https://leetcode.com/u/DKSbFeaWen/">
-    <img src="https://img.shields.io/badge/LeetCode-720%2B%20Solved-FFA116?style=for-the-badge&logo=leetcode&logoColor=black" alt="LeetCode Total Solved" />
+    <img src="https://leetcard.jacoblin.cool/DKSbFeaWen?theme=dark&font=Space%20Grotesk" alt="Aadithya's LeetCode Stats" width="520" />
   </a>
-  &nbsp;
-  <img src="https://img.shields.io/badge/Easy-348-00B8A3?style=for-the-badge" alt="LeetCode Easy Solved" />
-  &nbsp;
-  <img src="https://img.shields.io/badge/Medium-342-FFC01E?style=for-the-badge" alt="LeetCode Medium Solved" />
-  &nbsp;
-  <img src="https://img.shields.io/badge/Hard-39-FF375F?style=for-the-badge" alt="LeetCode Hard Solved" />
 
   <br/><br/>
 
-  <!-- GitHub Streak -->
-  <a href="https://github.com/AadithyaNayakV">
-    <img src="https://github-readme-streak-stats.herokuapp.com/?user=AadithyaNayakV&theme=tokyonight&hide_border=true" alt="GitHub Streak" />
+  <!-- LeetCode Breakdown Badges -->
+  <a href="https://leetcode.com/u/DKSbFeaWen/">
+    <img src="https://img.shields.io/badge/LeetCode-720%2B_Solved-FFA116?style=for-the-badge&logo=leetcode&logoColor=black" alt="LeetCode Total Solved" />
   </a>
+  &nbsp;
+  <img src="https://img.shields.io/badge/🟢_Easy-348-00B8A3?style=for-the-badge" alt="LeetCode Easy Solved" />
+  &nbsp;
+  <img src="https://img.shields.io/badge/🟡_Medium-342-FFC01E?style=for-the-badge" alt="LeetCode Medium Solved" />
+  &nbsp;
+  <img src="https://img.shields.io/badge/🔴_Hard-39-FF375F?style=for-the-badge" alt="LeetCode Hard Solved" />
 
 </div>
+
+<br/>
+
+| Category | Solved Count | Key Concepts & Patterns |
+| :--- | :--- | :--- |
+| 🟢 **Easy** | **348 Solved** | Two Pointers, Hash Maps, Prefix Sums, Binary Search Basics, Strings |
+| 🟡 **Medium** | **342 Solved** | Trees & BSTs, Graph Traversals (BFS/DFS), Dynamic Programming, Sliding Window, Greedy |
+| 🔴 **Hard** | **39 Solved** | Advanced DP, Graph Shortest Paths, Topological Sort, Complex Backtracking |
+| 🏆 **Total Solved** | **729+ Problems** | **Global Rank ~88,000** • Profile: [@DKSbFeaWen](https://leetcode.com/u/DKSbFeaWen/) |
+| 📁 **Code Archive** | [**DSA LeetCode Repo**](https://github.com/AadithyaNayakV/DSA-leetcode-) | Clean, documented Java solutions with optimal time & space complexity |
 
 ---
 
